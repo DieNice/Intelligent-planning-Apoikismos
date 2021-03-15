@@ -1,0 +1,42 @@
+.background_img .editor_knowlage_btn {
+    position: absolute;
+    top: 100%;
+    left: 22%;
+    width: 20vw;
+    height: 15vh;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #F1AD00;
+    color: white;
+    font-size: 2vw;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.background_img .do_task_btn {
+    position: absolute;
+    top: 100%;
+    left: 71%;
+    width: 20vw;
+    height: 15vh;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #F1AD00;
+    color: white;
+    font-size: 2vw;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+
+}
+
+.background_img .do_task_btn:hover {
+    background-color: #1CF624;
+}
+
+.background_img .editor_knowlage_btn:hover {
+    background-color: #1CF624;
+}

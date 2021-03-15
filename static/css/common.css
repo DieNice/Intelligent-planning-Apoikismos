@@ -1,0 +1,15 @@
+body {
+    background: #FFEFC6;
+}
+
+.background_img {
+    position: relative;
+    margin-left: 15vw;
+    margin-right: 15vw;
+    margin-top: 10vh;
+}
+
+img {
+    max-width: 40%;
+    margin: 4%;
+}
