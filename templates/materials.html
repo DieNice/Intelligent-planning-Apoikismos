@@ -13,11 +13,11 @@
     <img class="lamp_img" src="img/lamp_background.png">
 <div class="column_buttons">
     <div class="search_bar">
-        <form name="search" method="post">
+        <form name="search">
             <p><b>Поиск:</b><br>
-                <input type="text">
-                <input type="submit" value="Отправить">
-                <input type="reset" value="Очистить">
+                <input type="text" id="inputtext">
+                <input type="submit" value="Поиск" class="btnsearch">
+                <input type="reset" value="Очистить" class="btnsearch">
             </p>
         </form>
     </div>
@@ -52,14 +52,14 @@
         </table>
     </div>
     <div class="operation_line">
-        <input type="image" class="img_button" src="img/undo.png" alt="undo button"></input>
-        <input type="image" class="img_button" src="img/redo.png" alt="redo button"></input>
-        <button class="operation_btn">Создать</button>
+        <input type="image" class="img_button" src="img/undo.png" alt="undo button">
+        <input type="image" class="img_button" src="img/redo.png" alt="redo button">
+        <button class="operation_btn" onclick="document.location='create_materials.html'">Создать</button>
         <button class="operation_btn">Удалить</button>
         <button class="operation_btn">Сохранить</button>
     </div>
     <div id="button_prev">
-        <button class="btn_prev" onclick="document.location='#'"><
+        <button class="btn_prev" onclick="document.location='knowlage_editor.html'"><
             <Назад
         </button>
     </div>
