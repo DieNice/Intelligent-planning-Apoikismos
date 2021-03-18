@@ -143,7 +143,7 @@ tbody tr:hover {
     margin-left: 50vw;
 }
 
-.column_buttons {
+.controls {
     position: absolute;
     display: inline-flex;
     flex-direction: column;
@@ -155,7 +155,7 @@ tbody tr:hover {
 .header {
     height: 2vh;
     width: 8vw;
-    margin-left: 45vw;
+    margin-left: 35vw;
     background-color: #F1AD00;
     color: white;
     font-size: 1.5vw;

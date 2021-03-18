@@ -15,15 +15,13 @@
 
 .scroll-table thead th {
     font-weight: bold;
-    text-align: left;
+    /*width: 10%;*/
+    text-align: center;
     border: none;
     font-size: 2vw;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
     background: #f3bd48;
     color: white;
     text-shadow: 0 1px 1px #2D2020;
-    padding: 10px 20px;
 }
 
 .scroll-table-body table {
@@ -44,7 +42,6 @@
     background: #f3f3f3;
 }
 
-/* Стили для скролла */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -60,6 +57,7 @@
 tbody tr:hover {
     background: #f3bd48;
     color: #fff;
+    cursor: pointer;
 }
 
 .table_blur {
@@ -74,7 +72,6 @@ tbody tr:hover {
     box-shadow: inset 0 1px 0 #999999, inset 0 -1px 0 #999999;
     background: linear-gradient(#9595b6, #5a567f);
     color: white;
-    padding: 10px 15px;
     position: relative;
 }
 
@@ -96,7 +93,8 @@ tbody tr:hover {
 
 .table_blur td {
     border: 1px solid #e3eef7;
-    padding: 10px 15px;
+    padding: 2vh;
+    width: 30%;
     position: relative;
     transition: all 0.5s ease;
 }
@@ -108,16 +106,20 @@ tbody tr:hover {
 
 .operation_btn {
     height: 5vh;
-    width: 20vw;
+    width: 15vw;
     background-color: #F1AD00;
     color: white;
     font-size: 1.5vw;
-    padding: 1vw 5vh;
+    padding: 1vw 2vh;
+    margin-left: 5vw;
     border: none;
     cursor: pointer;
     border-radius: 2vw;
-    margin-left: 25vw;
     padding: .2em 1em calc(.8em + 3px);
+}
+
+.operation_btn:hover {
+    background-color: #1CF624;
 }
 
 #button_prev {
@@ -147,16 +149,17 @@ tbody tr:hover {
 
 .controls {
     position: absolute;
+    display: inline-flex;
     flex-direction: column;
-    margin-top: -65vh;
-    margin-left: 10vw;
-    margin-right: 10vw;
+    margin-top: -36vw;
+    margin-left: 5vw;
+    width: 90%;
 }
 
 .header {
     height: 2vh;
-    width: 15vw;
-    margin-left: 40vw;
+    width: 20vw;
+    margin-left: 35vw;
     background-color: #F1AD00;
     color: white;
     font-size: 1.5vw;
@@ -167,20 +170,25 @@ tbody tr:hover {
     padding: .2em 1em calc(.8em + 3px);
 }
 
-.textareawrapper {
-    height: 40vh;
-}
-
-textarea {
-    resize: none;
-    width: 100%;
-    height: 100%;
-}
-
 .img_button {
     height: 5vh;
 }
 
-.img_button {
-    height: 5vh;
+#inputtext {
+    width: 10vw;
+}
+
+.btnsearch {
+    color: white;
+    background-color: #F1AD00;
+    width: 8vw;
+    font-size: 1vw;
+    border: none;
+    cursor: pointer;
+    border-radius: 2vw;
+    padding: .2em 2em calc(.2em + 3px);
+}
+
+.btnsearch:hover {
+    background-color: #1CF624;
 }

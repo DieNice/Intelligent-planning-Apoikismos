@@ -1,29 +1,25 @@
 .scroll-table-body {
-    height: 50vh;
+    height: 10vh;
     overflow-x: auto;
     margin-top: 0px;
-    margin-bottom: 20px;
     border-bottom: 1px solid #eee;
 }
 
 
 .scroll-table table {
-    width: 100%;
     table-layout: fixed;
     border: none;
+    width: 100%;
 }
 
 .scroll-table thead th {
     font-weight: bold;
-    text-align: left;
+    text-align: center;
     border: none;
-    font-size: 2vw;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
+    font-size: 1vw;
     background: #f3bd48;
     color: white;
     text-shadow: 0 1px 1px #2D2020;
-    padding: 10px 20px;
 }
 
 .scroll-table-body table {
@@ -33,7 +29,7 @@
 .scroll-table tbody td {
     text-align: left;
     padding: 10px 15px;
-    font-size: 14px;
+    font-size: 1vw;
     vertical-align: top;
     border: 1px solid #e3eef7;
     position: relative;
@@ -44,7 +40,6 @@
     background: #f3f3f3;
 }
 
-/* Стили для скролла */
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -60,6 +55,7 @@
 tbody tr:hover {
     background: #f3bd48;
     color: #fff;
+    cursor: pointer;
 }
 
 .table_blur {
@@ -74,7 +70,6 @@ tbody tr:hover {
     box-shadow: inset 0 1px 0 #999999, inset 0 -1px 0 #999999;
     background: linear-gradient(#9595b6, #5a567f);
     color: white;
-    padding: 10px 15px;
     position: relative;
 }
 
@@ -96,7 +91,8 @@ tbody tr:hover {
 
 .table_blur td {
     border: 1px solid #e3eef7;
-    padding: 10px 15px;
+    width: 50%;
+    font-size: 1.5vh;
     position: relative;
     transition: all 0.5s ease;
 }
@@ -107,18 +103,21 @@ tbody tr:hover {
 }
 
 .operation_btn {
-    height: 5vh;
-    width: 20vw;
+    height: 2vh;
+    width: 15vw;
     background-color: #F1AD00;
     color: white;
-    font-size: 1.5vw;
-    padding: 1vw 5vh;
+    font-size: 1vw;
+    margin-left: 6vw;
     border: none;
     cursor: pointer;
     border-radius: 2vw;
-    margin-left: 25vw;
-    padding: .2em 1em calc(.8em + 3px);
 }
+
+.operation_btn:hover, .btn_push:hover {
+    background-color: #1CF624;
+}
+
 
 #button_prev {
     padding-top: 5vh;
@@ -126,61 +125,117 @@ tbody tr:hover {
 
 .btn_prev {
     border-radius: 2vw;
-    width: 20vw;
+    width: 10vw;
     background-color: #6AB8FF;
     color: white;
-    margin-left: 5vw;
-    font-size: 2vw;
+    margin-left: -12vw;
+    margin-right: 2vw;
+    font-size: 1vw;
     border: none;
     cursor: pointer;
     border-radius: 2vw;
 
+}
+
+.btn_push {
+    border-radius: 2vw;
+    margin-top: 2vh;
+    width: 4vw;
+    background-color: #6AB8FF;
+    color: white;
+    font-size: 1vw;
+    border: none;
+    cursor: pointer;
+    border-radius: 2vw;
 }
 
 .btn_prev:hover {
     background-color: #1CF624;
 }
 
-.search_bar {
-    margin-left: 50vw;
-}
-
 .controls {
     position: absolute;
+    display: inline-flex;
     flex-direction: column;
     margin-top: -65vh;
-    margin-left: 10vw;
-    margin-right: 10vw;
+    margin-left: 15vw;
 }
 
 .header {
-    height: 2vh;
-    width: 15vw;
-    margin-left: 40vw;
+    height: 1vh;
+    width: 30vw;
+    margin-left: 16vw;
     background-color: #F1AD00;
     color: white;
     font-size: 1.5vw;
-    padding: 2vw 5vh;
     border: none;
-    cursor: pointer;
     border-radius: 2vw;
     padding: .2em 1em calc(.8em + 3px);
 }
 
-.textareawrapper {
-    height: 40vh;
-}
-
-textarea {
-    resize: none;
-    width: 100%;
-    height: 100%;
-}
-
 .img_button {
-    height: 5vh;
+    height: 2vh;
 }
 
-.img_button {
-    height: 5vh;
+.button_push_column {
+    position: inherit;
+    display: inline-flex;
+    flex-direction: column;
+    top: -40vh;
+}
+
+top_column {
+    position: relative;
+    top: -36vh;
+}
+
+.column_tables {
+    width: 30vw;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.right_tables {
+    position: relative;
+}
+
+.operation_line {
+    margin-top: 1vh;
+}
+
+.block_label {
+    height: 0.5vh;
+    width: 10vw;
+    margin-left: 26vw;
+    background-color: #F1AD00;
+    color: white;
+    font-size: 1vw;
+    margin-top: 0.3vh;
+    border: none;
+    border-radius: 2vw;
+    padding: .2em 1em calc(.8em + 3px);
+}
+
+.action_name input {
+    width: 16vw;
+    height: 1vh;
+}
+
+.action_name {
+    display: contents;
+    height: 0.5vh;
+    width: 10vw;
+    background-color: #F1AD00;
+    font-size: 1vw;
+    margin-top: 0.3vh;
+    margin-left: 20vw;
+    border: none;
+    border-radius: 3vw;
+    padding: .2em 1em calc(.8em + 3px);
+}
+
+.scroll-table-body.table_blur td input{
+    width: 95%;
+    height: 1vh;
+    font-size: 1vh;
 }

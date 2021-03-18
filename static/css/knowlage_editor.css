@@ -1,4 +1,4 @@
-.column_buttons {
+.controls {
     position: absolute;
     display: inline-flex;
     flex-direction: column;
@@ -18,7 +18,7 @@
     padding: .8em 1em calc(.8em + 3px);
 }
 
-.column_buttons div {
+.controls div {
     margin-top: 2vh;
 }
 

@@ -10,27 +10,30 @@
 <p class="background_img">
     <img class="tree_img" src="img/tree_background.png">
     <img class="lamp_img" src="img/lamp_background.png">
-<div class="column_buttons">
+<div class="controls">
     <div>
         <button class="column_btn" onclick="eel.materialsload();document.location='materials.html'">Материалы</button>
     </div>
     <div>
-        <button class="column_btn" onclick="document.location='knowlage_editor.html'">Инструменты</button>
-    </div>
-    <div>
-        <button class="column_btn" onclick="document.location='knowlage_editor.html'">Постройки</button>
-    </div>
-    <div>
-        <button class="column_btn" onclick="document.location='knowlage_editor.html'">Возможные действия робота</button>
-    </div>
-    <div>
-        <button class="column_btn" onclick="document.location='knowlage_editor.html'">Проверка целостности базы знаний
+        <button class="column_btn" onclick="eel.instrumentsload();document.location='instruments.html'">
+            Инструменты
         </button>
     </div>
     <div>
-        <button class="btn_prev" onclick="document.location='index.html'"><
-            <Назад
+        <button class="column_btn" onclick="eel.buildingsload();document.location='buildings.html'">Постройки
         </button>
+    </div>
+    <div>
+        <button class="column_btn" onclick="eel.actionrobotload();document.location='posible_action_robot.html'">
+            Возможные действия робота
+        </button>
+    </div>
+    <div>
+        <button class="column_btn" onclick="document.location='integrity_check.html'">Проверка целостности базы знаний
+        </button>
+    </div>
+    <div>
+        <button class="btn_prev" onclick="document.location='index.html'">Назад</button>
     </div>
 
 </div>

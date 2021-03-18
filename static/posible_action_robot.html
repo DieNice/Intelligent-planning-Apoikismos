@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Intelligent-planning-Apoikismos/Knowlage editor/Materials</title>
+    <title>Intelligent-planning-Apoikismos/Knowlage editor/Posible actions robot</title>
     <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/common_creation.css">
+    <link rel="stylesheet" href="css/common_actions_robot.css">
     <script type="text/javascript" src="/eel.js"></script>
 </head>
 <body>
+<div class="header">Возможные действия робота</div>
 <p class="background_img">
     <img class="tree_img" src="img/tree_background.png">
     <img class="lamp_img" src="img/lamp_background.png">
 <div class="controls">
-    <div class="header">Материалы</div>
     <div class="search_bar">
         <form name="search">
             <p><b>Поиск:</b><br>
@@ -27,34 +27,42 @@
             <thead>
             <tr>
                 <th>Название</th>
-                <th>Краткое описание</th>
+                <th>Предусловие</th>
+                <th>Результат</th>
             </tr>
             </thead>
         </table>
     </div>
-    {% set user_list = [('tom','is cat'), ('jerry','is mouse'), ('spike','how is'),('simon','meow'),('tom','is cat'),
-    ('jerry','is mouse'), ('spike','how is'),('simon','meow'),('tom','is cat'), ('jerry','is mouse'), ('spike','how
-    is'),('simon','meow'),('tom','is cat'), ('jerry','is mouse'), ('spike','how is'),('simon','meow')] %}
+    
     <div class="scroll-table-body table_blur">
         <table>
             <tbody>
-            {% for user in user_list %}
+            
             <tr>
                 <td>
-                    {{ user[0] }}
+                    Построить фундамент
                 </td>
                 <td>
-                    {{ user[1] }}
+                    Материалы - {Бетон 10 ед.} 
+ Инструменты-{лопата}
+    Постройки-{}
+                </td>
+                <td>
+                    Материалы - {Бетон 10 ед.} 
+ Инструменты-{лопата}
+    Постройки-{}
                 </td>
             </tr>
-            {% endfor %}
+            
             </tbody>
         </table>
     </div>
     <div class="operation_line">
         <input type="image" class="img_button" src="img/undo.png" alt="undo button">
         <input type="image" class="img_button" src="img/redo.png" alt="redo button">
-        <button class="operation_btn" onclick="document.location='create_material.html'">Создать</button>
+        <button class="operation_btn" onclick="document.location='edit_create_actions_robot.html'">Редактировать
+        </button>
+        <button class="operation_btn" onclick="document.location='edit_create_actions_robot.html'">Создать</button>
         <button class="operation_btn">Удалить</button>
         <button class="operation_btn">Сохранить</button>
     </div>

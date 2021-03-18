@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Intelligent-planning-Apoikismos/Knowlage editor/Integrity check</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/integrity_check.css">
+    <script type="text/javascript" src="/eel.js"></script>
+</head>
+<body>
+<div class="header">Проверка целостностиы</div>
+<p class="background_img">
+    <img class="tree_img" src="img/tree_background.png">
+    <img class="lamp_img" src="img/lamp_background.png">
+<div class="controls">
+    <div class="scroll-table">
+        <table>
+            <thead>
+            <tr>
+                <th>Название раздела</th>
+                <th>Результат проверки</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="scroll-table-body table_blur">
+        <table>
+            <tbody>
+
+            <tr>
+                <td>
+                    Материалы (ресурсы)
+                </td>
+                <td>
+                    Пройдена
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="operation_line">
+        <input type="image" class="img_button" src="img/undo.png" alt="undo button">
+        <input type="image" class="img_button" src="img/redo.png" alt="redo button">
+        <button class="operation_btn">Проверка</button>
+        <button class="operation_btn" onclick="document.location='detail_report.html'">Подробный отчёт</button>
+    </div>
+    <div id="button_prev">
+        <button class="btn_prev" onclick="document.location='knowlage_editor.html'">Назад</button>
+    </div>
+</div>
+</p>
+</body>
+</html>
