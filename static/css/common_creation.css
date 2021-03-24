@@ -170,8 +170,8 @@ tbody tr:hover {
     height: 5vh;
 }
 
-#inputtext {
-    width: 10vw;
+#search-text {
+    width: 30vw;
 }
 
 .btnsearch {
@@ -183,4 +183,9 @@ tbody tr:hover {
     cursor: pointer;
     border-radius: 2vw;
     padding: .2em 2em calc(.2em + 3px);
+}
+
+
+.selected td {
+    border: solid blue 1px;
 }

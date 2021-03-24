@@ -12,19 +12,25 @@
     <img class="lamp_img" src="img/lamp_background.png">
 <div class="controls">
     <div>
-        <button class="column_btn" onclick="eel.materialsload();document.location='materials.html'">Материалы</button>
+        <button class="column_btn"
+                onclick="eel.object_load(title='Materials',header='Материалы');document.location='./temp/simple_objects.html'">
+            Материалы
+        </button>
     </div>
     <div>
-        <button class="column_btn" onclick="eel.instrumentsload();document.location='instruments.html'">
+        <button class="column_btn"
+                onclick="eel.object_load(title='Instruments',header='Инструменты');document.location='temp/simple_objects.html'">
             Инструменты
         </button>
     </div>
     <div>
-        <button class="column_btn" onclick="eel.buildingsload();document.location='buildings.html'">Постройки
+        <button class="column_btn"
+                onclick="eel.object_load(title='Buildings',header='Постройки');document.location='temp/simple_objects.html'">
+            Постройки
         </button>
     </div>
     <div>
-        <button class="column_btn" onclick="eel.actionrobotload();document.location='posible_action_robot.html'">
+        <button class="column_btn" onclick="eel.object_load();document.location='posible_action_robot.html'">
             Возможные действия робота
         </button>
     </div>
@@ -39,6 +45,5 @@
 </div>
 
 </p>
-
 </body>
 </html>

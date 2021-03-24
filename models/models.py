@@ -2,49 +2,69 @@ from sqlalchemy import create_engine
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import with_polymorphic
+from sqlalchemy import inspect
+from sqlalchemy import or_
 
 engine = create_engine('sqlite:///ipa.db', echo=False)
+Session = sessionmaker(bind=engine)
+session = Session()
 
 Base = declarative_base()
 
 
-class Material(Base):
-    __tablename__ = 'material'
+class SimpleEntity(Base):
+    __tablename__ = 'simple_entity'
     id = Column(Integer, primary_key=True)
+    type = Column(String)
     name = Column(String)
     description = Column(String)
 
     def __init__(self, name, description):
         self.name = name
         self.description = description
+
+    def getstr(self):
+        return (self.name, self.description)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'simple_entity',
+        'polymorphic_on': type,
+    }
+
+
+class Material(SimpleEntity):
+    __tablename__ = 'material'
+    id = Column(Integer, ForeignKey('simple_entity.id'), primary_key=True)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'material'
+    }
 
     def __repr__(self):
         return "<Material('%s','%s')>" % (self.name, self.description)
 
 
-class Instrument(Base):
+class Instrument(SimpleEntity):
     __tablename__ = 'instrument'
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    description = Column(String)
+    id = Column(Integer, ForeignKey('simple_entity.id'), primary_key=True)
 
-    def __init__(self, name, description):
-        self.name = name
-        self.description = description
+    __mapper_args__ = {
+        'polymorphic_identity': 'instrument'
+    }
 
     def __repr__(self):
         return "<Instrument('%s','%s')>" % (self.name, self.description)
 
 
-class Building(Base):
+class Building(SimpleEntity):
     __tablename__ = 'building'
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    description = Column(String)
+    id = Column(Integer, ForeignKey('simple_entity.id'), primary_key=True)
 
-    def __init__(self, name, description):
-        self.name = name
-        self.description = description
+    __mapper_args__ = {
+        'polymorphic_identity': 'building'
+    }
 
     def __repr__(self):
         return "<Building('%s','%s')>" % (self.name, self.description)
@@ -61,7 +81,7 @@ class PossibleAction(Base):
         self.name = name
 
     def __repr__(self):
-        return "<Material('%s','%s')>" % (self.name)
+        return "<PossibleAction('%s','%s')>" % (self.name)
 
 
 class Precondition(Base):
