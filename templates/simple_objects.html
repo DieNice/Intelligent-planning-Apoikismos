@@ -70,7 +70,6 @@
     }
 
     function delete_selected() {
-        document.getElementById('delete').addEventListener('click', function () {
             let row = document.getElementsByClassName('selected');
             let title = row[0].children[0].textContent;
             let description = row[0].children[1].textContent;
@@ -78,7 +77,6 @@
             alert(title + " успешно удалено!");
             row[0].parentNode.removeChild(row[0]);
             eel.delete_object(type = t, name = title, desc = description);
-        }, false);
     }
 
     function save_changes() {

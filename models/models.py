@@ -5,7 +5,10 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import with_polymorphic
 from sqlalchemy import inspect
-from sqlalchemy import or_
+from sqlalchemy import func, and_, or_, not_, alias
+from sqlalchemy.orm import aliased
+from sqlalchemy import asc
+from sqlalchemy import outerjoin
 
 engine = create_engine('sqlite:///ipa.db', echo=False)
 Session = sessionmaker(bind=engine)
@@ -81,7 +84,7 @@ class PossibleAction(Base):
         self.name = name
 
     def __repr__(self):
-        return "<PossibleAction('%s','%s')>" % (self.name)
+        return "<PossibleAction('%s')>" % (self.name)
 
 
 class Precondition(Base):
@@ -94,6 +97,10 @@ class Precondition(Base):
     building_id = Column(Integer, ForeignKey('building.id'))
     possible_action = relationship("PossibleAction", back_populates="precondition")
 
+    def __repr__(self):
+        return "<Precondition('%s','%s','%s','%s')>" % (
+            str(self.material_id), str(self.count_material), str(self.instrument_id), str(self.building_id))
+
 
 class Result(Base):
     __tablename__ = 'result'
@@ -104,6 +111,10 @@ class Result(Base):
     instrument_id = Column(Integer, ForeignKey('instrument.id'))
     building_id = Column(Integer, ForeignKey('building.id'))
     possible_action = relationship("PossibleAction", back_populates="result")
+
+    def __repr__(self):
+        return "<Result('%s','%s','%s','%s')>" % (
+            str(self.material_id), str(self.count_material), str(self.instrument_id), str(self.building_id))
 
 
 Base.metadata.create_all(engine)

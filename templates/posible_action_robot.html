@@ -9,15 +9,13 @@
 <body>
 <div class="header">Возможные действия робота</div>
 <p class="background_img">
-    <img class="tree_img" src="img/tree_background.png">
-    <img class="lamp_img" src="img/lamp_background.png">
+    <img class="tree_img" src="../img/tree_background.png">
+    <img class="lamp_img" src="../img/lamp_background.png">
 <div class="controls">
     <div class="search_bar">
         <form name="search">
             <p><b>Поиск:</b><br>
-                <input type="text" id="inputtext">
-                <input type="submit" value="Поиск" class="btnsearch">
-                <input type="reset" value="Очистить" class="btnsearch">
+                <input id="search-text" type="text" placeholder="Название или описание" onkeyup="tableSearch()">
             </p>
         </form>
     </div>
@@ -33,21 +31,19 @@
             </thead>
         </table>
     </div>
-    {% set action_list = [('Построить фундамент','Материалы - {Бетон 10 ед.} \n Инструменты-{лопата}
-    Постройки-{}','Материалы-{Бетон -10 ед.},Инструменты-{},Постройки-{Фундамент жилого здания}')] %}
     <div class="scroll-table-body table_blur">
-        <table>
+        <table id="info-table">
             <tbody>
             {% for act in action_list %}
-            <tr>
+            <tr onclick='select_row(this)'>
                 <td>
-                    {{ act[0] }}
+                    {{ act[0][1] }}
                 </td>
                 <td>
-                    {{ act[1] }}
+                    {{ act[0][2:8] }}
                 </td>
                 <td>
-                    {{ act[1] }}
+                    {{ act[0][9:16] }}
                 </td>
             </tr>
             {% endfor %}
@@ -55,18 +51,55 @@
         </table>
     </div>
     <div class="operation_line">
-        <input type="image" class="img_button" src="img/undo.png" alt="undo button">
-        <input type="image" class="img_button" src="img/redo.png" alt="redo button">
+        <input type="image" class="img_button" src="../img/undo.png" alt="undo button">
+        <input type="image" class="img_button" src="../img/redo.png" alt="redo button">
         <button class="operation_btn" onclick="document.location='edit_create_actions_robot.html'">Редактировать
         </button>
         <button class="operation_btn" onclick="document.location='edit_create_actions_robot.html'">Создать</button>
-        <button class="operation_btn">Удалить</button>
+        <button class="operation_btn" onclick="delete_selected()">Удалить</button>
         <button class="operation_btn">Сохранить</button>
     </div>
     <div id="button_prev">
-        <button class="btn_prev" onclick="document.location='knowlage_editor.html'">Назад</button>
+        <button class="btn_prev" onclick="document.location='../knowlage_editor.html'">Назад</button>
     </div>
 </div>
 </p>
+<script>
+    let selected_row = null;
+
+    function select_row(row) {
+        if (selected_row != null) selected_row.className = '';
+        selected_row = row;
+        if (selected_row != null) selected_row.className = 'selected';
+    }
+
+    function tableSearch() {
+        let phrase = document.getElementById('search-text');
+        let table = document.getElementById('info-table');
+        let regPhrase = new RegExp(phrase.value, 'i');
+        let flag = false;
+        for (let i = 0; i < table.rows.length; i++) {
+            flag = false;
+            for (let j = table.rows[i].cells.length - 1; j >= 0; j--) {
+                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
+                if (flag) break;
+            }
+            if (flag) {
+                table.rows[i].style.display = "";
+            } else {
+                table.rows[i].style.display = "none";
+            }
+
+        }
+    }
+
+    function delete_selected() {
+        let row = document.getElementsByClassName('selected');
+        let title = row[0].children[0].textContent;
+        let description = row[0].children[1].textContent;
+        alert(title + " успешно удалено!");
+        row[0].parentNode.removeChild(row[0]);
+    }
+</script>
 </body>
 </html>
