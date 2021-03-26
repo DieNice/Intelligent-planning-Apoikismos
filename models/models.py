@@ -40,6 +40,8 @@ class SimpleEntity(Base):
 class Material(SimpleEntity):
     __tablename__ = 'material'
     id = Column(Integer, ForeignKey('simple_entity.id'), primary_key=True)
+    material_precondition = relationship("MaterialPrecondition", back_populates="material_parent")
+    material_result = relationship("MaterialResult", back_populates="material_parent")
 
     __mapper_args__ = {
         'polymorphic_identity': 'material'
@@ -52,6 +54,8 @@ class Material(SimpleEntity):
 class Instrument(SimpleEntity):
     __tablename__ = 'instrument'
     id = Column(Integer, ForeignKey('simple_entity.id'), primary_key=True)
+    instrument_precondition = relationship("InstrumentPrecondition", back_populates="instrument_parent")
+    instrument_result = relationship("InstrumentResult", back_populates="instrument_parent")
 
     __mapper_args__ = {
         'polymorphic_identity': 'instrument'
@@ -64,6 +68,8 @@ class Instrument(SimpleEntity):
 class Building(SimpleEntity):
     __tablename__ = 'building'
     id = Column(Integer, ForeignKey('simple_entity.id'), primary_key=True)
+    building_precondition = relationship("BuildingPrecondition", back_populates="building_parent")
+    building_result = relationship("BuildingResult", back_populates="building_parent")
 
     __mapper_args__ = {
         'polymorphic_identity': 'building'
@@ -77,8 +83,12 @@ class PossibleAction(Base):
     __tablename__ = 'possible_action'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    precondition = relationship("Precondition")
-    result = relationship("Result")
+    InstrumentPrecondition = relationship("InstrumentPrecondition")
+    MaterialPrecondition = relationship("MaterialPrecondition")
+    BuildingPrecondition = relationship("BuildingPrecondition")
+    InstrumentResult = relationship("InstrumentResult")
+    MaterialResult = relationship("MaterialResult")
+    BuildingResult = relationship("BuildingResult")
 
     def __init__(self, name):
         self.name = name
@@ -86,35 +96,88 @@ class PossibleAction(Base):
     def __repr__(self):
         return "<PossibleAction('%s')>" % (self.name)
 
+    def __str__(self):
+        return "<PossibleAction('%s')>" % (self.name)
 
-class Precondition(Base):
-    __tablename__ = 'precondition'
+
+class InstrumentPrecondition(Base):
+    __tablename__ = 'instrument_precondition'
+    id = Column(Integer, primary_key=True)
+    action_id = Column(Integer, ForeignKey('possible_action.id'))
+    instrument_id = Column(Integer, ForeignKey('instrument.id'))
+    possible_action = relationship("PossibleAction", back_populates="InstrumentPrecondition")
+    instrument_parent = relationship("Instrument", back_populates="instrument_precondition")
+
+    def __repr__(self):
+        return "<InstrumentPrecondition('%s','%s')>" % (
+            str(self.action_id), str(self.instrument_id))
+
+
+class MaterialPrecondition(Base):
+    __tablename__ = 'material_precondition'
     id = Column(Integer, primary_key=True)
     action_id = Column(Integer, ForeignKey('possible_action.id'))
     material_id = Column(Integer, ForeignKey('material.id'))
-    count_material = Column(Integer)
-    instrument_id = Column(Integer, ForeignKey('instrument.id'))
-    building_id = Column(Integer, ForeignKey('building.id'))
-    possible_action = relationship("PossibleAction", back_populates="precondition")
+    count = Column(Integer)
+    possible_action = relationship("PossibleAction", back_populates="MaterialPrecondition")
+    material_parent = relationship("Material", back_populates="material_precondition")
 
     def __repr__(self):
-        return "<Precondition('%s','%s','%s','%s')>" % (
-            str(self.material_id), str(self.count_material), str(self.instrument_id), str(self.building_id))
+        return "<MaterialPrecondition('%s','%s')>" % (
+            str(self.material_id), str(self.action_id))
 
 
-class Result(Base):
-    __tablename__ = 'result'
+class BuildingPrecondition(Base):
+    __tablename__ = 'building_precondition'
+    id = Column(Integer, primary_key=True)
+    action_id = Column(Integer, ForeignKey('possible_action.id'))
+    building_id = Column(Integer, ForeignKey('building.id'))
+    possible_action = relationship("PossibleAction", back_populates="BuildingPrecondition")
+    building_parent = relationship("Building", back_populates="building_precondition")
+
+    def __repr__(self):
+        return "<BuildingPrecondition('%s','%s')>" % (
+            str(self.action_id), str(self.building_id))
+
+
+class InstrumentResult(Base):
+    __tablename__ = 'instrument_result'
+    id = Column(Integer, primary_key=True)
+    action_id = Column(Integer, ForeignKey('possible_action.id'))
+    instrument_id = Column(Integer, ForeignKey('instrument.id'))
+    possible_action = relationship("PossibleAction", back_populates="InstrumentResult")
+    instrument_parent = relationship("Instrument", back_populates="instrument_result")
+
+    def __repr__(self):
+        return "<InstrumentResult('%s','%s')>" % (
+            str(self.action_id), str(self.instrument_id))
+
+
+class MaterialResult(Base):
+    __tablename__ = 'material_result'
     id = Column(Integer, primary_key=True)
     action_id = Column(Integer, ForeignKey('possible_action.id'))
     material_id = Column(Integer, ForeignKey('material.id'))
-    count_material = Column(Integer)
-    instrument_id = Column(Integer, ForeignKey('instrument.id'))
-    building_id = Column(Integer, ForeignKey('building.id'))
-    possible_action = relationship("PossibleAction", back_populates="result")
+    count = Column(Integer)
+    possible_action = relationship("PossibleAction", back_populates="MaterialResult")
+    material_parent = relationship("Material", back_populates="material_result")
 
     def __repr__(self):
-        return "<Result('%s','%s','%s','%s')>" % (
-            str(self.material_id), str(self.count_material), str(self.instrument_id), str(self.building_id))
+        return "<MaterialResult('%s','%s')>" % (
+            str(self.material_id), str(self.action_id))
+
+
+class BuildingResult(Base):
+    __tablename__ = 'building_result'
+    id = Column(Integer, primary_key=True)
+    action_id = Column(Integer, ForeignKey('possible_action.id'))
+    building_id = Column(Integer, ForeignKey('building.id'))
+    possible_action = relationship("PossibleAction", back_populates="BuildingResult")
+    building_parent = relationship("Building", back_populates="building_result")
+
+    def __repr__(self):
+        return "<BuildingPrecondition('%s','%s')>" % (
+            str(self.action_id), str(self.building_id))
 
 
 Base.metadata.create_all(engine)
