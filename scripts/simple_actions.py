@@ -43,8 +43,12 @@ def create_object(type: str, name: str, desc: str) -> None:
     session.commit()
 
 
-def get_all(type: SimpleEntity):
-    return session.query(type).filter(and_(not_(type.name.contains('Пусто')), not_(type.name.contains('Нет')))).all()
+def get_all(type: SimpleEntity, filtered_special=True):
+    if filtered_special:
+        return session.query(type).filter(
+            and_(not_(type.name.contains('Пусто')), not_(type.name.contains('Нет')))).all()
+    else:
+        return session.query(type).all()
 
 
 @eel.expose

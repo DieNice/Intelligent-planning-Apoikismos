@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Intelligent-planning-Apoikismos/Knowlage editor/Edit,create action robot</title>
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/edit_create_actions_robot.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/edit_create_actions_robot.css">
     <script type="text/javascript" src="/eel.js"></script>
 </head>
 <body>
 <p class="background_img">
-    <img class="tree_img" src="img/tree_background.png">
-    <img class="lamp_img" src="img/lamp_background.png">
+    <img class="tree_img" src="../img/tree_background.png">
+    <img class="lamp_img" src="../img/lamp_background.png">
 <div class="controls">
     <div class="header">Редактирование/Создание действия робота</div>
     <div class="block_label">Предусловие действия</div>
@@ -32,12 +33,16 @@
                 <div class="scroll-table-body table_blur">
                     <table>
                         <tbody>
-
-                        <tr>
+                        {% for material in materials %}
+                        <tr onclick='select_row(this)'>
                             <td>
-                                tom
+                                {{ material.name }}
+                            </td>
+                            <td>
+                                {{ material.description }}
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -55,12 +60,16 @@
                 <div class="scroll-table-body table_blur">
                     <table>
                         <tbody>
-
-                        <tr>
+                        {% for instrument in instruments %}
+                        <tr onclick='select_row(this)'>
                             <td>
-                                tom
+                                {{ instrument.name }}
+                            </td>
+                            <td>
+                                {{ instrument.description }}
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -78,12 +87,16 @@
                 <div class="scroll-table-body table_blur">
                     <table>
                         <tbody>
-
-                        <tr>
+                        {% for building in buildings %}
+                        <tr onclick='select_row(this)'>
                             <td>
-                                tom
+                                {{ building.name }}
+                            </td>
+                            <td>
+                                {{ building.description }}
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -117,7 +130,6 @@
 
                         <tr>
                             <td>
-                                tom
                             </td>
                             <td>
                                 <input type="text">
@@ -191,12 +203,16 @@
                 <div class="scroll-table-body table_blur">
                     <table>
                         <tbody>
-
-                        <tr>
+                        {% for material in materials %}
+                        <tr onclick='select_row(this)'>
                             <td>
-                                tom
+                                {{ material.name }}
+                            </td>
+                            <td>
+                                {{ material.description }}
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -214,12 +230,16 @@
                 <div class="scroll-table-body table_blur">
                     <table>
                         <tbody>
-
-                        <tr>
+                        {% for instrument in instruments %}
+                        <tr onclick='select_row(this)'>
                             <td>
-                                tom
+                                {{ instrument.name }}
+                            </td>
+                            <td>
+                                {{ instrument.description }}
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -236,13 +256,17 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
-
-                        <tr>
+                        <tbody
+                                {% for building in buildings %}
+                        <tr onclick='select_row(this)'>
                             <td>
-                                tom
+                                {{ building.name }}
+                            </td>
+                            <td>
+                                {{ building.description }}
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -336,8 +360,8 @@
     </div>
     <div class="operation_line">
         <button class="btn_prev" onclick="document.location='posible_action_robot.html'">Назад</button>
-        <input type="image" class="img_button" src="img/undo.png" alt="undo button">
-        <input type="image" class="img_button" src="img/redo.png" alt="redo button">
+        <input type="image" class="img_button" src="../img/undo.png" alt="undo button">
+        <input type="image" class="img_button" src="../img/redo.png" alt="redo button">
         <button class="operation_btn">Сохранить</button>
     </div>
 </div>

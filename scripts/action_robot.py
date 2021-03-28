@@ -2,6 +2,7 @@ import eel
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from models.models import *
+from scripts.simple_actions import get_all, types
 
 
 @eel.expose
@@ -58,3 +59,21 @@ def get_possible_actions_all():
     found_records = query.cte()
     records = session.query(found_records).all()
     return records
+
+
+@eel.expose
+def load_creation_action():
+    env = Environment(
+        loader=FileSystemLoader('.'),
+        autoescape=select_autoescape(['html', 'xml'])
+    )
+    template = env.get_template('/templates/edit_create_actions_robot.html')
+
+    m = get_all(types["Materials"], False)
+    i = get_all(types["Instruments"], False)
+    b = get_all(types["Buildings"], False)
+
+    rendered_page = template.render(materials=m, instruments=i, buildings=b)
+
+    with open('./static/temp/edit_create_actions_robot.html', 'w', encoding="utf8") as file:
+        file.write(rendered_page)
