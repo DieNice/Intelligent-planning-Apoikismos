@@ -44,7 +44,7 @@ def create_object(type: str, name: str, desc: str) -> None:
 
 
 def get_all(type: SimpleEntity):
-    return session.query(type).all()
+    return session.query(type).filter(and_(not_(type.name.contains('Пусто')), not_(type.name.contains('Нет')))).all()
 
 
 @eel.expose
