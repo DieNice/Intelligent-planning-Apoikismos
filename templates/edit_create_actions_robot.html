@@ -9,8 +9,6 @@
 </head>
 <body>
 <p class="background_img">
-    <img class="tree_img" src="../img/tree_background.png">
-    <img class="lamp_img" src="../img/lamp_background.png">
 <div class="controls">
     <div class="header">Редактирование/Создание действия робота</div>
     <div class="block_label">Предусловие действия</div>
@@ -32,14 +30,11 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
+                        <tbody id="material-precondition">
                         {% for material in materials %}
-                        <tr onclick='select_row(this)'>
+                        <tr onclick='select_row(this)' title="{{ material.description}}">
                             <td>
                                 {{ material.name }}
-                            </td>
-                            <td>
-                                {{ material.description }}
                             </td>
                         </tr>
                         {% endfor %}
@@ -59,14 +54,11 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
+                        <tbody id="instrument-precondition">
                         {% for instrument in instruments %}
-                        <tr onclick='select_row(this)'>
+                        <tr onclick='select_row(this)' title="{{instrument.description}}">
                             <td>
                                 {{ instrument.name }}
-                            </td>
-                            <td>
-                                {{ instrument.description }}
                             </td>
                         </tr>
                         {% endfor %}
@@ -86,14 +78,11 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
+                        <tbody id="building-precondition">
                         {% for building in buildings %}
-                        <tr onclick='select_row(this)'>
+                        <tr onclick='select_row(this)' title="{{building.description}}">
                             <td>
                                 {{ building.name }}
-                            </td>
-                            <td>
-                                {{ building.description }}
                             </td>
                         </tr>
                         {% endfor %}
@@ -103,14 +92,8 @@
             </div>
         </div>
         <div class="button_push_column">
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'">>
-            </button>
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'">>>
-            </button>
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'"><
-            </button>
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'"><<
-            </button>
+            <button class="btn_push" onclick="add_rows()">></button>
+            <button class="btn_push" onclick=""><</button>
         </div>
         <div class="column_tables right_tables">
             <div>
@@ -126,15 +109,8 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
-
+                        <tbody id="material-precondition-right">
                         <tr>
-                            <td>
-                            </td>
-                            <td>
-                                <input type="text">
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -151,11 +127,9 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
-
+                        <tbody id="instrument-precondition-right">
                         <tr>
                             <td>
-                                tom
                             </td>
                         </tr>
                         </tbody>
@@ -174,11 +148,9 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
-
+                        <tbody id="building-precondition-right">
                         <tr>
                             <td>
-                                tom
                             </td>
                         </tr>
                         </tbody>
@@ -188,61 +160,11 @@
         </div>
     </div>
     <div class="block_label">Результаты действия</div>
-    <div class="bottom_clock">
+    <div class="bottom_block">
         <div class="column_tables left_tables">
             <div>
-                <div class="scroll-table">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Материалы</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="scroll-table-body table_blur">
-                    <table>
-                        <tbody>
-                        {% for material in materials %}
-                        <tr onclick='select_row(this)'>
-                            <td>
-                                {{ material.name }}
-                            </td>
-                            <td>
-                                {{ material.description }}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <div>
-                <div class="scroll-table">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Инструменты</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="scroll-table-body table_blur">
-                    <table>
-                        <tbody>
-                        {% for instrument in instruments %}
-                        <tr onclick='select_row(this)'>
-                            <td>
-                                {{ instrument.name }}
-                            </td>
-                            <td>
-                                {{ instrument.description }}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <div>
                 <div class="scroll-table">
@@ -256,14 +178,11 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody
-                                {% for building in buildings %}
-                        <tr onclick='select_row(this)'>
+                        <tbody id="building-result">
+                        {% for building in buildings %}
+                        <tr onclick='select_row(this)' title="{{ building.description }}">
                             <td>
                                 {{ building.name }}
-                            </td>
-                            <td>
-                                {{ building.description }}
                             </td>
                         </tr>
                         {% endfor %}
@@ -273,65 +192,14 @@
             </div>
         </div>
         <div class="button_push_column">
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'">>
+            <button class="btn_push" onclick="add_to_right('building-result', 'building-result-right', false)">>
             </button>
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'">>>
-            </button>
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'"><
-            </button>
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'"><<
-            </button>
+            <button class="btn_push" onclick=""><</button>
         </div>
         <div class="column_tables right_tables">
             <div>
-                <div class="scroll-table">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Материалы</th>
-                            <th>Количество единиц ресурсов</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="scroll-table-body table_blur">
-                    <table>
-                        <tbody>
-
-                        <tr>
-                            <td>
-                                tom
-                            </td>
-                            <td>
-                                <input type="text">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <div>
-                <div class="scroll-table">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Инструменты</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="scroll-table-body table_blur">
-                    <table>
-                        <tbody>
-
-                        <tr>
-                            <td>
-                                tom
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <div>
                 <div class="scroll-table">
@@ -345,13 +213,7 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
-
-                        <tr>
-                            <td>
-                                tom
-                            </td>
-                        </tr>
+                        <tbody id="building-result-right">
                         </tbody>
                     </table>
                 </div>
@@ -366,5 +228,34 @@
     </div>
 </div>
 </p>
+<script>
+    function add_rows() {
+        add_to_right("material-precondition", "material-precondition-right");
+        add_to_right("instrument-precondition", "instrument-precondition-right", false);
+        add_to_right("building-precondition", "building-precondition-right", false);
+    }
+
+    function add_to_right(id_left, id_right, add_input = true) {
+        transit_rows = document.getElementById(id_left).getElementsByClassName('selected');
+        right_column = document.getElementById(id_right);
+        m_len = transit_rows.length;
+        for (let i = 0; i < m_len; i++) {
+            if (add_input) {
+                new_td = document.createElement("td");
+                new_input = document.createElement("input");
+                new_td.appendChild(new_input);
+                transit_rows[0].appendChild(new_td);
+            }
+            right_column.appendChild(transit_rows[0]);
+        }
+    }
+
+    function select_row(row) {
+        selected_row = row;
+        if (selected_row.className == 'selected') selected_row.className = '';
+        else if (selected_row != null) selected_row.className = 'selected';
+    }
+
+</script>
 </body>
 </html>

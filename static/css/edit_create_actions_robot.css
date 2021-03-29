@@ -157,7 +157,7 @@ tbody tr:hover {
     position: absolute;
     display: inline-flex;
     flex-direction: column;
-    margin-top: -65vh;
+    margin-top: -10vh;
     margin-left: 15vw;
 }
 
@@ -234,8 +234,12 @@ top_column {
     padding: .2em 1em calc(.8em + 3px);
 }
 
-.scroll-table-body.table_blur td input{
+.scroll-table-body.table_blur td input {
     width: 95%;
     height: 1vh;
     font-size: 1vh;
+}
+
+.selected td {
+    border: solid blue 1px;
 }
