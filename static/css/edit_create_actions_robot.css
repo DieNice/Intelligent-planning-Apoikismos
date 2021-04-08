@@ -1,5 +1,5 @@
 .scroll-table-body {
-    height: 10vh;
+    height: 14vh;
     overflow-x: auto;
     margin-top: 0px;
     border-bottom: 1px solid #eee;
@@ -103,7 +103,7 @@ tbody tr:hover {
 }
 
 .operation_btn {
-    height: 2vh;
+    height: 3vh;
     width: 15vw;
     background-color: #F1AD00;
     color: white;
@@ -158,13 +158,13 @@ tbody tr:hover {
     display: inline-flex;
     flex-direction: column;
     margin-top: -10vh;
-    margin-left: 15vw;
+    margin-left: 5vw;
 }
 
 .header {
     height: 1vh;
     width: 30vw;
-    margin-left: 16vw;
+    margin-left: 25vw;
     background-color: #F1AD00;
     color: white;
     font-size: 1.5vw;
@@ -190,7 +190,7 @@ top_column {
 }
 
 .column_tables {
-    width: 30vw;
+    width: 40vw;
     display: inline-flex;
     flex-direction: column;
 }
@@ -200,13 +200,14 @@ top_column {
 }
 
 .operation_line {
+    margin-left: 25vw;
     margin-top: 1vh;
 }
 
 .block_label {
     height: 0.5vh;
     width: 10vw;
-    margin-left: 26vw;
+    margin-left: 35vw;
     background-color: #F1AD00;
     color: white;
     font-size: 1vw;
@@ -218,12 +219,12 @@ top_column {
 
 .action_name input {
     width: 16vw;
-    height: 1vh;
+    height: 2vh;
 }
 
 .action_name {
     display: contents;
-    height: 0.5vh;
+    height: 1vh;
     width: 10vw;
     background-color: #F1AD00;
     font-size: 1vw;
