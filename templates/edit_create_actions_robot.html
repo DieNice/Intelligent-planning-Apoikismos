@@ -93,7 +93,7 @@
         </div>
         <div class="button_push_column">
             <button class="btn_push" onclick="add_rows()">></button>
-            <button class="btn_push" onclick=""><</button>
+            <button class="btn_push" onclick="delete_rows()"><</button>
         </div>
         <div class="column_tables right_tables">
             <div>
@@ -192,9 +192,12 @@
             </div>
         </div>
         <div class="button_push_column">
-            <button class="btn_push" onclick="add_to_right('building-result', 'building-result-right', false)">>
+            <button class="btn_push"
+                    onclick="add_to_right('building-result', 'building-result-right', false);clear_selected()">>
             </button>
-            <button class="btn_push" onclick=""><</button>
+            <button class="btn_push"
+                    onclick="add_to_left('building-result-right','building-result',false);clear_selected()"><
+            </button>
         </div>
         <div class="column_tables right_tables">
             <div>
@@ -229,26 +232,58 @@
 </div>
 </p>
 <script>
+    function clear_selected() {
+        let transit_rows = document.querySelectorAll('.selected')
+        let m_len = transit_rows.length;
+        for (let i = 0; i <= m_len; i++) {
+            transit_rows[i].className = ''
+        }
+    }
+
+
     function add_rows() {
         add_to_right("material-precondition", "material-precondition-right");
         add_to_right("instrument-precondition", "instrument-precondition-right", false);
         add_to_right("building-precondition", "building-precondition-right", false);
+        clear_selected()
     }
 
-    function add_to_right(id_left, id_right, add_input = true) {
-        transit_rows = document.getElementById(id_left).getElementsByClassName('selected');
-        right_column = document.getElementById(id_right);
-        m_len = transit_rows.length;
+    function delete_rows() {
+        add_to_left("material-precondition-right", "material-precondition", true);
+        add_to_left("instrument-precondition-right", "instrument-precondition", false);
+        add_to_left("building-precondition-right", "building-precondition", false);
+        clear_selected()
+    }
+
+    function add_to_right(id1, id2, add_input = true) {
+        let transit_rows = document.getElementById(id1).getElementsByClassName('selected');
+        let right_column = document.getElementById(id2);
+        let m_len = transit_rows.length;
         for (let i = 0; i < m_len; i++) {
             if (add_input) {
-                new_td = document.createElement("td");
-                new_input = document.createElement("input");
+                let new_td = document.createElement("td");
+                let new_input = document.createElement("input");
                 new_td.appendChild(new_input);
                 transit_rows[0].appendChild(new_td);
+            }
+
+            right_column.appendChild(transit_rows[0]);
+        }
+    }
+
+    function add_to_left(id1, id2, del_input = true) {
+        let transit_rows = document.getElementById(id1).getElementsByClassName('selected');
+        let right_column = document.getElementById(id2);
+        let m_len = transit_rows.length;
+        for (let i = 0; i < m_len; i++) {
+            if (del_input) {
+                let old_td = document.getElementsByClassName('selected')[i].children[1]
+                document.getElementsByClassName('selected')[i].removeChild(old_td)
             }
             right_column.appendChild(transit_rows[0]);
         }
     }
+
 
     function select_row(row) {
         selected_row = row;
