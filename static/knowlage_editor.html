@@ -30,7 +30,7 @@
         </button>
     </div>
     <div>
-        <button class="column_btn" onclick="eel.action_robot_load();document.location='temp/posible_action_robot.html'">
+        <button class="column_btn" onclick="action_robot()">
             Возможные действия робота
         </button>
     </div>
@@ -45,5 +45,11 @@
 </div>
 
 </p>
+<script>
+    function action_robot() {
+        eel.action_robot_load();
+        document.location = 'temp/posible_action_robot.html';
+    }
+</script>
 </body>
 </html>

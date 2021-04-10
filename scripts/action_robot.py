@@ -137,3 +137,17 @@ def createactionrobot(action_name: str, materials: List[Tuple[str, str, int]], i
             session.add(new_buildings_res)
             session.commit()
         print("Успешно добавлено!")
+
+
+@eel.expose
+def delete_action(action_name):
+    action_name = action_name.strip()
+    action_name = action_name.replace('\n', '')
+    query = session.query(PossibleAction).filter_by(name=action_name).first()
+    session.delete(query)
+    session.commit()
+
+
+@eel.expose
+def save_action():
+    session.commit()

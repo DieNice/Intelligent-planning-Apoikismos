@@ -9,6 +9,7 @@ from sqlalchemy import func, and_, or_, not_, alias
 from sqlalchemy.orm import aliased
 from sqlalchemy import asc
 from sqlalchemy import outerjoin
+from sqlalchemy.orm import backref
 
 engine = create_engine('sqlite:///ipa.db', echo=False, connect_args={'check_same_thread': False})
 Session = sessionmaker(bind=engine)
@@ -83,12 +84,12 @@ class PossibleAction(Base):
     __tablename__ = 'possible_action'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    InstrumentPrecondition = relationship("InstrumentPrecondition")
-    MaterialPrecondition = relationship("MaterialPrecondition")
-    BuildingPrecondition = relationship("BuildingPrecondition")
-    InstrumentResult = relationship("InstrumentResult")
-    MaterialResult = relationship("MaterialResult")
-    BuildingResult = relationship("BuildingResult")
+    InstrumentPrecondition = relationship("InstrumentPrecondition", cascade='all,delete', backref='possible_action')
+    MaterialPrecondition = relationship("MaterialPrecondition", cascade='all,delete', backref='possible_action')
+    BuildingPrecondition = relationship("BuildingPrecondition", cascade='all,delete', backref='possible_action')
+    InstrumentResult = relationship("InstrumentResult", cascade='all,delete', backref='possible_action')
+    MaterialResult = relationship("MaterialResult", cascade='all,delete', backref='possible_action')
+    BuildingResult = relationship("BuildingResult", cascade='all,delete', backref='possible_action')
 
     def __init__(self, name):
         self.name = name
@@ -103,9 +104,8 @@ class PossibleAction(Base):
 class InstrumentPrecondition(Base):
     __tablename__ = 'instrument_precondition'
     id = Column(Integer, primary_key=True)
-    action_id = Column(Integer, ForeignKey('possible_action.id'))
+    action_id = Column(Integer, ForeignKey('possible_action.id', ondelete="CASCADE"))
     instrument_id = Column(Integer, ForeignKey('instrument.id'))
-    possible_action = relationship("PossibleAction", back_populates="InstrumentPrecondition")
     instrument_parent = relationship("Instrument", back_populates="instrument_precondition")
 
     def __init__(self, action_id, instrument_id):
@@ -120,10 +120,9 @@ class InstrumentPrecondition(Base):
 class MaterialPrecondition(Base):
     __tablename__ = 'material_precondition'
     id = Column(Integer, primary_key=True)
-    action_id = Column(Integer, ForeignKey('possible_action.id'))
+    action_id = Column(Integer, ForeignKey('possible_action.id', ondelete="CASCADE"))
     material_id = Column(Integer, ForeignKey('material.id'))
     count = Column(Integer)
-    possible_action = relationship("PossibleAction", back_populates="MaterialPrecondition")
     material_parent = relationship("Material", back_populates="material_precondition")
 
     def __init__(self, action_id, materials_id, count):
@@ -139,9 +138,8 @@ class MaterialPrecondition(Base):
 class BuildingPrecondition(Base):
     __tablename__ = 'building_precondition'
     id = Column(Integer, primary_key=True)
-    action_id = Column(Integer, ForeignKey('possible_action.id'))
+    action_id = Column(Integer, ForeignKey('possible_action.id', ondelete="CASCADE"))
     building_id = Column(Integer, ForeignKey('building.id'))
-    possible_action = relationship("PossibleAction", back_populates="BuildingPrecondition")
     building_parent = relationship("Building", back_populates="building_precondition")
 
     def __init__(self, action_id, building_id):
@@ -156,9 +154,8 @@ class BuildingPrecondition(Base):
 class InstrumentResult(Base):
     __tablename__ = 'instrument_result'
     id = Column(Integer, primary_key=True)
-    action_id = Column(Integer, ForeignKey('possible_action.id'))
+    action_id = Column(Integer, ForeignKey('possible_action.id', ondelete="CASCADE"))
     instrument_id = Column(Integer, ForeignKey('instrument.id'))
-    possible_action = relationship("PossibleAction", back_populates="InstrumentResult")
     instrument_parent = relationship("Instrument", back_populates="instrument_result")
 
     def __init__(self, action_id, instrument_id):
@@ -173,10 +170,9 @@ class InstrumentResult(Base):
 class MaterialResult(Base):
     __tablename__ = 'material_result'
     id = Column(Integer, primary_key=True)
-    action_id = Column(Integer, ForeignKey('possible_action.id'))
+    action_id = Column(Integer, ForeignKey('possible_action.id', ondelete="CASCADE"))
     material_id = Column(Integer, ForeignKey('material.id'))
     count = Column(Integer)
-    possible_action = relationship("PossibleAction", back_populates="MaterialResult")
     material_parent = relationship("Material", back_populates="material_result")
 
     def __init__(self, action_id, materials_id, count):
@@ -192,9 +188,8 @@ class MaterialResult(Base):
 class BuildingResult(Base):
     __tablename__ = 'building_result'
     id = Column(Integer, primary_key=True)
-    action_id = Column(Integer, ForeignKey('possible_action.id'))
+    action_id = Column(Integer, ForeignKey('possible_action.id', ondelete="CASCADE"))
     building_id = Column(Integer, ForeignKey('building.id'))
-    possible_action = relationship("PossibleAction", back_populates="BuildingResult")
     building_parent = relationship("Building", back_populates="building_result")
 
     def __init__(self, action_id, building_id):

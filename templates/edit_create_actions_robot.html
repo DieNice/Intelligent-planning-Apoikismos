@@ -310,7 +310,7 @@
             let name = buildings[i].getElementsByTagName("td")[0].innerText;
             let build_desc = "";
             if (name != "Нет") {
-                build_desc = instruments[i].title;
+                build_desc = buildings[i].title;
             }
             b.push([name, build_desc]);
         }
@@ -337,11 +337,12 @@
         } else {
             eel.createactionrobot(name_action, m, instr, b, res_b);
             eel.action_robot_load();
+            alert(name_action + " успешно создано!")
+            document.location = 'posible_action_robot.html';
         }
 
 
     }
-
 
 </script>
 </body>
