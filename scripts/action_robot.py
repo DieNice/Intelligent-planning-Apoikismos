@@ -81,7 +81,47 @@ def load_creation_action(headername: str, titlename: str):
 
 
 @eel.expose
-def create_action_robot(materials: List[Tuple[str, str, int]], instruments: List[Tuple[str, str]],
-                        buildings: List[Tuple[str, str]],
-                        res_buildings: List[Tuple[str, str]]):
-    pass
+def createactionrobot(action_name: str, materials: List[Tuple[str, str, int]], instruments: List[Tuple[str, str]],
+                      buildings: List[Tuple[str, str]],
+                      res_buildings: List[Tuple[str, str]]):
+    new_action = PossibleAction(action_name)
+    query = session.query(PossibleAction).filter_by(name=action_name).first()
+    if query is not None:
+        print("Действие с таким названием уже существует!")
+    else:
+        session.add(new_action)
+        session.commit()
+        new_action_id = session.query(PossibleAction).filter_by(name=action_name).first()
+        print(new_action.id)
+        for i in materials:
+            query = session.query(Material).filter_by(name=i[0], description=i[1]).first()
+            new_material_precond = MaterialPrecondition(new_action_id.id, query.id, i[2])
+            session.add(new_material_precond)
+            session.commit()
+        for i in instruments:
+            query = session.query(Instrument).filter_by(name=i[0], description=i[1]).first()
+            new_instruments_precond = InstrumentPrecondition(new_action_id.id, query.id)
+            session.add(new_instruments_precond)
+            session.commit()
+        for i in buildings:
+            query = session.query(Building).filter_by(name=i[0], description=i[1]).first()
+            new_buildings_precond = BuildingPrecondition(new_action_id.id, query.id)
+            session.add(new_buildings_precond)
+            session.commit()
+        # Postconditions (results)
+        for i in materials:
+            query = session.query(Material).filter_by(name=i[0], description=i[1]).first()
+            new_material_res = MaterialResult(new_action_id.id, query.id, i[2] * -1)
+            session.add(new_material_res)
+            session.commit()
+        none_instrument = session.query(Instrument).filter_by(name="Нет").first()
+        for _ in instruments:
+            new_instruments_res = InstrumentResult(new_action_id.id, none_instrument.id)
+            session.add(new_instruments_res)
+            session.commit()
+        for i in res_buildings:
+            query = session.query(Building).filter_by(name=i[0], description=i[1]).first()
+            new_buildings_res = BuildingResult(new_action_id.id, query.id)
+            session.add(new_buildings_res)
+            session.commit()
+        print("Успешно добавлено!")

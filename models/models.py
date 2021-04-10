@@ -10,7 +10,7 @@ from sqlalchemy.orm import aliased
 from sqlalchemy import asc
 from sqlalchemy import outerjoin
 
-engine = create_engine('sqlite:///ipa.db', echo=False)
+engine = create_engine('sqlite:///ipa.db', echo=False, connect_args={'check_same_thread': False})
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -108,6 +108,10 @@ class InstrumentPrecondition(Base):
     possible_action = relationship("PossibleAction", back_populates="InstrumentPrecondition")
     instrument_parent = relationship("Instrument", back_populates="instrument_precondition")
 
+    def __init__(self, action_id, instrument_id):
+        self.action_id = action_id
+        self.instrument_id = instrument_id
+
     def __repr__(self):
         return "<InstrumentPrecondition('%s','%s')>" % (
             str(self.action_id), str(self.instrument_id))
@@ -122,6 +126,11 @@ class MaterialPrecondition(Base):
     possible_action = relationship("PossibleAction", back_populates="MaterialPrecondition")
     material_parent = relationship("Material", back_populates="material_precondition")
 
+    def __init__(self, action_id, materials_id, count):
+        self.action_id = action_id
+        self.material_id = materials_id
+        self.count = count
+
     def __repr__(self):
         return "<MaterialPrecondition('%s','%s')>" % (
             str(self.material_id), str(self.action_id))
@@ -135,6 +144,10 @@ class BuildingPrecondition(Base):
     possible_action = relationship("PossibleAction", back_populates="BuildingPrecondition")
     building_parent = relationship("Building", back_populates="building_precondition")
 
+    def __init__(self, action_id, building_id):
+        self.action_id = action_id
+        self.building_id = building_id
+
     def __repr__(self):
         return "<BuildingPrecondition('%s','%s')>" % (
             str(self.action_id), str(self.building_id))
@@ -147,6 +160,10 @@ class InstrumentResult(Base):
     instrument_id = Column(Integer, ForeignKey('instrument.id'))
     possible_action = relationship("PossibleAction", back_populates="InstrumentResult")
     instrument_parent = relationship("Instrument", back_populates="instrument_result")
+
+    def __init__(self, action_id, instrument_id):
+        self.action_id = action_id
+        self.instrument_id = instrument_id
 
     def __repr__(self):
         return "<InstrumentResult('%s','%s')>" % (
@@ -162,6 +179,11 @@ class MaterialResult(Base):
     possible_action = relationship("PossibleAction", back_populates="MaterialResult")
     material_parent = relationship("Material", back_populates="material_result")
 
+    def __init__(self, action_id, materials_id, count):
+        self.action_id = action_id
+        self.material_id = materials_id
+        self.count = count
+
     def __repr__(self):
         return "<MaterialResult('%s','%s')>" % (
             str(self.material_id), str(self.action_id))
@@ -174,6 +196,10 @@ class BuildingResult(Base):
     building_id = Column(Integer, ForeignKey('building.id'))
     possible_action = relationship("PossibleAction", back_populates="BuildingResult")
     building_parent = relationship("Building", back_populates="building_result")
+
+    def __init__(self, action_id, building_id):
+        self.action_id = action_id
+        self.building_id = building_id
 
     def __repr__(self):
         return "<BuildingPrecondition('%s','%s')>" % (

@@ -284,6 +284,7 @@
     }
 
     function save() {
+        let name_action = document.getElementById('inputtext').value;
         let materials = document.getElementById('material-precondition-right').getElementsByTagName("tr");
         let instruments = document.getElementById('instrument-precondition-right').getElementsByTagName("tr");
         let buildings = document.getElementById('building-precondition-right').getElementsByTagName("tr");
@@ -292,27 +293,37 @@
         for (let i = 0; i < materials.length; i++) {
             let name = materials[i].getElementsByTagName("td")[0].innerText;
             let desc = materials[i].title;
-            let count = Number(materials[i].getElementsByTagName("td")[1].innerText);
+            let count = Number(materials[i].getElementsByTagName("input")[0].value);
             m.push([name, desc, count]);
         }
         let instr = [];
         for (let i = 0; i < instruments.length; i++) {
             let name = instruments[i].getElementsByTagName("td")[0].innerText;
-            let desc = instruments[i].title;
-            instr.push([name, desc]);
+            let instr_desc = "";
+            if (name != "Нет") {
+                instr_desc = instruments[i].title;
+            }
+            instr.push([name, instr_desc]);
         }
         let b = [];
         for (let i = 0; i < buildings.length; i++) {
             let name = buildings[i].getElementsByTagName("td")[0].innerText;
-            let desc = instruments[i].title;
-            b.push([name, desc]);
+            let build_desc = "";
+            if (name != "Нет") {
+                build_desc = instruments[i].title;
+            }
+            b.push([name, build_desc]);
         }
         let res_b = [];
         for (let i = 0; i < res_buildings.length; i++) {
             let name = buildings[i].getElementsByTagName("td")[0].innerText;
-            let desc = instruments[i].title;
-            res_b.push([name, desc]);
+            let res_b_desc = "";
+            if (name != "Нет") {
+                res_b_desc = res_buildings[i].title;
+            }
+            res_b.push([name, res_b_desc]);
         }
+        console.log(name_action)
         console.log(m);
         console.log(instr);
         console.log(b);
@@ -324,10 +335,12 @@
         } else if (res_b.length == 0) {
             alert("Выберите результаты построек!")
         } else {
-            eel.create_action_robot(m, instr, b, res_b);
+            eel.createactionrobot(name_action, m, instr, b, res_b);
         }
 
+
     }
+
 
 </script>
 </body>
