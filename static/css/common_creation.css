@@ -156,6 +156,7 @@ tbody tr:hover {
     height: 2vh;
     width: 8vw;
     margin-left: 35vw;
+    text-align: center;
     background-color: #F1AD00;
     color: white;
     font-size: 1.5vw;

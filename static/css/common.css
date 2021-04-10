@@ -13,3 +13,9 @@ img {
     max-width: 40%;
     margin: 4%;
 }
+
+button,
+button:active,
+button:focus {
+    outline: none;
+}

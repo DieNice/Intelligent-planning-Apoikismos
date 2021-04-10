@@ -163,8 +163,9 @@ tbody tr:hover {
 
 .header {
     height: 1vh;
-    width: 30vw;
-    margin-left: 25vw;
+    width: 22vw;
+    margin-left: 30vw;
+    text-align: center;
     background-color: #F1AD00;
     color: white;
     font-size: 1.5vw;
@@ -208,6 +209,7 @@ top_column {
     height: 0.5vh;
     width: 10vw;
     margin-left: 35vw;
+    text-align: center;
     background-color: #F1AD00;
     color: white;
     font-size: 1vw;

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Intelligent-planning-Apoikismos/Knowlage editor/Edit,create action robot</title>
+    <title>Intelligent-planning-Apoikismos/Knowlage editor/{{titlename}}</title>
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/edit_create_actions_robot.css">
     <script type="text/javascript" src="/eel.js"></script>
@@ -10,7 +10,7 @@
 <body>
 <p class="background_img">
 <div class="controls">
-    <div class="header">Редактирование/Создание действия робота</div>
+    <div class="header">{{headername}}</div>
     <div class="block_label">Предусловие действия</div>
     <div class="action_name">
         Название действия
@@ -110,7 +110,6 @@
                 <div class="scroll-table-body table_blur">
                     <table>
                         <tbody id="material-precondition-right">
-                        <tr>
                         </tbody>
                     </table>
                 </div>
@@ -128,10 +127,7 @@
                 <div class="scroll-table-body table_blur">
                     <table>
                         <tbody id="instrument-precondition-right">
-                        <tr>
-                            <td>
-                            </td>
-                        </tr>
+
                         </tbody>
                     </table>
                 </div>
@@ -149,10 +145,6 @@
                 <div class="scroll-table-body table_blur">
                     <table>
                         <tbody id="building-precondition-right">
-                        <tr>
-                            <td>
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -227,7 +219,7 @@
         <button class="btn_prev" onclick="document.location='posible_action_robot.html'">Назад</button>
         <input type="image" class="img_button" src="../img/undo.png" alt="undo button">
         <input type="image" class="img_button" src="../img/redo.png" alt="redo button">
-        <button class="operation_btn">Сохранить</button>
+        <button class="operation_btn" onclick="save()">Сохранить</button>
     </div>
 </div>
 </p>
@@ -235,7 +227,7 @@
     function clear_selected() {
         let transit_rows = document.querySelectorAll('.selected')
         let m_len = transit_rows.length;
-        for (let i = 0; i <= m_len; i++) {
+        for (let i = 0; i < m_len; i++) {
             transit_rows[i].className = ''
         }
     }
@@ -289,6 +281,52 @@
         selected_row = row;
         if (selected_row.className == 'selected') selected_row.className = '';
         else if (selected_row != null) selected_row.className = 'selected';
+    }
+
+    function save() {
+        let materials = document.getElementById('material-precondition-right').getElementsByTagName("tr");
+        let instruments = document.getElementById('instrument-precondition-right').getElementsByTagName("tr");
+        let buildings = document.getElementById('building-precondition-right').getElementsByTagName("tr");
+        let res_buildings = document.getElementById('building-result-right').getElementsByTagName("tr");
+        let m = [];
+        for (let i = 0; i < materials.length; i++) {
+            let name = materials[i].getElementsByTagName("td")[0].innerText;
+            let desc = materials[i].title;
+            let count = Number(materials[i].getElementsByTagName("td")[1].innerText);
+            m.push([name, desc, count]);
+        }
+        let instr = [];
+        for (let i = 0; i < instruments.length; i++) {
+            let name = instruments[i].getElementsByTagName("td")[0].innerText;
+            let desc = instruments[i].title;
+            instr.push([name, desc]);
+        }
+        let b = [];
+        for (let i = 0; i < buildings.length; i++) {
+            let name = buildings[i].getElementsByTagName("td")[0].innerText;
+            let desc = instruments[i].title;
+            b.push([name, desc]);
+        }
+        let res_b = [];
+        for (let i = 0; i < res_buildings.length; i++) {
+            let name = buildings[i].getElementsByTagName("td")[0].innerText;
+            let desc = instruments[i].title;
+            res_b.push([name, desc]);
+        }
+        console.log(m);
+        console.log(instr);
+        console.log(b);
+        console.log(res_b);
+        if (m.length == 0) {
+            alert("Выберите материалы!")
+        } else if (instr.length == 0) {
+            alert("Выберите инструменты!")
+        } else if (res_b.length == 0) {
+            alert("Выберите результаты построек!")
+        } else {
+            eel.create_action_robot(m, instr, b, res_b);
+        }
+
     }
 
 </script>

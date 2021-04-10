@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Intelligent-planning-Apoikismos/Knowlage editor/Solution problem</title>
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/solution_problem.css">
+    <meta charset="utf-8">
+    <title>Intelligent-planning-Apoikismos/Knowlage editor/{{titlename}}</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/edit_create_actions_robot.css">
     <script type="text/javascript" src="/eel.js"></script>
 </head>
 <body>
-
 <p class="background_img">
-    <img class="tree_img" src="img/tree_background.png">
-    <img class="lamp_img" src="img/lamp_background.png">
 <div class="controls">
-    <div class="header">Решение задачи</div>
-    <div class="block_label">Начальное состояние</div>
+    <div class="header">{{headername}}</div>
+    <div class="block_label">Предусловие действия</div>
+    <div class="action_name">
+        Название действия
+        <input type="text" id="inputtext">
+    </div>
     <div class="top_block">
         <div class="column_tables left_tables">
             <div>
@@ -28,13 +30,14 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
-
-                        <tr>
+                        <tbody id="material-precondition">
+                        {% for material in materials %}
+                        <tr onclick='select_row(this)' title="{{ material.description}}">
                             <td>
-                                tom
+                                {{ material.name }}
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -51,13 +54,14 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
-
-                        <tr>
+                        <tbody id="instrument-precondition">
+                        {% for instrument in instruments %}
+                        <tr onclick='select_row(this)' title="{{instrument.description}}">
                             <td>
-                                tom
+                                {{ instrument.name }}
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -74,27 +78,22 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
-
-                        <tr>
+                        <tbody id="building-precondition">
+                        {% for building in buildings %}
+                        <tr onclick='select_row(this)' title="{{building.description}}">
                             <td>
-                                tom
+                                {{ building.name }}
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
         <div class="button_push_column">
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'">>
-            </button>
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'">>>
-            </button>
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'"><
-            </button>
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'"><<
-            </button>
+            <button class="btn_push" onclick="add_rows()">></button>
+            <button class="btn_push" onclick="delete_rows()"><</button>
         </div>
         <div class="column_tables right_tables">
             <div>
@@ -110,16 +109,7 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
-
-                        <tr>
-                            <td>
-                                tom
-                            </td>
-                            <td>
-                                <input type="text">
-                            </td>
-                        </tr>
+                        <tbody id="material-precondition-right">
                         </tbody>
                     </table>
                 </div>
@@ -136,13 +126,8 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
+                        <tbody id="instrument-precondition-right">
 
-                        <tr>
-                            <td>
-                                tom
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -159,67 +144,19 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
-
-                        <tr>
-                            <td>
-                                tom
-                            </td>
-                        </tr>
+                        <tbody id="building-precondition-right">
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="block_label">Целевое состояние</div>
-    <div class="bottom_clock">
+    <div class="block_label">Результаты действия</div>
+    <div class="bottom_block">
         <div class="column_tables left_tables">
             <div>
-                <div class="scroll-table">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Материалы</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="scroll-table-body table_blur">
-                    <table>
-                        <tbody>
-
-                        <tr>
-                            <td>
-                                tom
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <div>
-                <div class="scroll-table">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Инструменты</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="scroll-table-body table_blur">
-                    <table>
-                        <tbody>
-
-                        <tr>
-                            <td>
-                                tom
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <div>
                 <div class="scroll-table">
@@ -233,78 +170,31 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
-
-                        <tr>
+                        <tbody id="building-result">
+                        {% for building in buildings %}
+                        <tr onclick='select_row(this)' title="{{ building.description }}">
                             <td>
-                                tom
+                                {{ building.name }}
                             </td>
                         </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
         <div class="button_push_column">
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'">>
+            <button class="btn_push"
+                    onclick="add_to_right('building-result', 'building-result-right', false);clear_selected()">>
             </button>
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'">>>
-            </button>
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'"><
-            </button>
-            <button class="btn_push" onclick="document.location='knowlage_editor.html'"><<
+            <button class="btn_push"
+                    onclick="add_to_left('building-result-right','building-result',false);clear_selected()"><
             </button>
         </div>
         <div class="column_tables right_tables">
             <div>
-                <div class="scroll-table">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Материалы</th>
-                            <th>Количество единиц ресурсов</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="scroll-table-body table_blur">
-                    <table>
-                        <tbody>
-
-                        <tr>
-                            <td>
-                                tom
-                            </td>
-                            <td>
-                                <input type="text">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <div>
-                <div class="scroll-table">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Инструменты</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="scroll-table-body table_blur">
-                    <table>
-                        <tbody>
-
-                        <tr>
-                            <td>
-                                tom
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <div>
                 <div class="scroll-table">
@@ -318,13 +208,7 @@
                 </div>
                 <div class="scroll-table-body table_blur">
                     <table>
-                        <tbody>
-
-                        <tr>
-                            <td>
-                                tom
-                            </td>
-                        </tr>
+                        <tbody id="building-result-right">
                         </tbody>
                     </table>
                 </div>
@@ -332,12 +216,119 @@
         </div>
     </div>
     <div class="operation_line">
-        <button class="btn_prev" onclick="document.location='knowlage_editor.html'">Назад</button>
-        <input type="image" class="img_button" src="img/undo.png" alt="undo button">
-        <input type="image" class="img_button" src="img/redo.png" alt="redo button">
-        <button class="operation_btn">Найти план</button>
+        <button class="btn_prev" onclick="document.location='index.html'">Назад</button>
+        <input type="image" class="img_button" src="../img/undo.png" alt="undo button">
+        <input type="image" class="img_button" src="../img/redo.png" alt="redo button">
+        <button class="operation_btn" onclick="save()">Сохранить</button>
     </div>
 </div>
 </p>
+<script>
+    function clear_selected() {
+        let transit_rows = document.querySelectorAll('.selected')
+        let m_len = transit_rows.length;
+        for (let i = 0; i < m_len; i++) {
+            transit_rows[i].className = ''
+        }
+    }
+
+
+    function add_rows() {
+        add_to_right("material-precondition", "material-precondition-right");
+        add_to_right("instrument-precondition", "instrument-precondition-right", false);
+        add_to_right("building-precondition", "building-precondition-right", false);
+        clear_selected()
+    }
+
+    function delete_rows() {
+        add_to_left("material-precondition-right", "material-precondition", true);
+        add_to_left("instrument-precondition-right", "instrument-precondition", false);
+        add_to_left("building-precondition-right", "building-precondition", false);
+        clear_selected()
+    }
+
+    function add_to_right(id1, id2, add_input = true) {
+        let transit_rows = document.getElementById(id1).getElementsByClassName('selected');
+        let right_column = document.getElementById(id2);
+        let m_len = transit_rows.length;
+        for (let i = 0; i < m_len; i++) {
+            if (add_input) {
+                let new_td = document.createElement("td");
+                let new_input = document.createElement("input");
+                new_td.appendChild(new_input);
+                transit_rows[0].appendChild(new_td);
+            }
+
+            right_column.appendChild(transit_rows[0]);
+        }
+    }
+
+    function add_to_left(id1, id2, del_input = true) {
+        let transit_rows = document.getElementById(id1).getElementsByClassName('selected');
+        let right_column = document.getElementById(id2);
+        let m_len = transit_rows.length;
+        for (let i = 0; i < m_len; i++) {
+            if (del_input) {
+                let old_td = document.getElementsByClassName('selected')[i].children[1]
+                document.getElementsByClassName('selected')[i].removeChild(old_td)
+            }
+            right_column.appendChild(transit_rows[0]);
+        }
+    }
+
+
+    function select_row(row) {
+        selected_row = row;
+        if (selected_row.className == 'selected') selected_row.className = '';
+        else if (selected_row != null) selected_row.className = 'selected';
+    }
+
+    function save() {
+        let materials = document.getElementById('material-precondition-right').getElementsByTagName("tr");
+        let instruments = document.getElementById('instrument-precondition-right').getElementsByTagName("tr");
+        let buildings = document.getElementById('building-precondition-right').getElementsByTagName("tr");
+        let res_buildings = document.getElementById('building-result-right').getElementsByTagName("tr");
+        let m = [];
+        for (let i = 0; i < materials.length; i++) {
+            let name = materials[i].getElementsByTagName("td")[0].innerText;
+            let desc = materials[i].title;
+            let count = Number(materials[i].getElementsByTagName("td")[1].innerText);
+            m.push([name, desc, count]);
+        }
+        let instr = [];
+        for (let i = 0; i < instruments.length; i++) {
+            let name = instruments[i].getElementsByTagName("td")[0].innerText;
+            let desc = instruments[i].title;
+            instr.push([name, desc]);
+        }
+        let b = [];
+        for (let i = 0; i < buildings.length; i++) {
+            let name = buildings[i].getElementsByTagName("td")[0].innerText;
+            let desc = instruments[i].title;
+            b.push([name, desc]);
+        }
+        let res_b = [];
+        for (let i = 0; i < res_buildings.length; i++) {
+            let name = buildings[i].getElementsByTagName("td")[0].innerText;
+            let desc = instruments[i].title;
+            res_b.push([name, desc]);
+        }
+        console.log(m);
+        console.log(instr);
+        console.log(b);
+        console.log(res_b);
+        if (m.length == 0) {
+            alert("Выберите материалы!")
+        } else if (instr.length == 0) {
+            alert("Выберите инструменты!")
+        } else if (res_b.length == 0) {
+            alert("Выберите результаты построек!")
+        } else {
+            eel.create_action_robot(m, instr, b, res_b);
+        }
+
+    }
+
+</script>
 </body>
 </html>

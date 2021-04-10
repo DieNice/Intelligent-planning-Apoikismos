@@ -51,10 +51,13 @@
     <div class="operation_line">
         <input type="image" class="img_button" src="../img/undo.png" alt="undo button">
         <input type="image" class="img_button" src="../img/redo.png" alt="redo button">
-        <button class="operation_btn" onclick="document.location='edit_create_actions_robot.html'">Редактировать
+        <button class="operation_btn"
+                onclick="eel.load_creation_action(headername='Редактирование действий робота',titlename='Edit action robot');document.location='edit_create_actions_robot.html'">
+            Редактировать
         </button>
         <button class="operation_btn"
-                onclick="eel.load_creation_action();document.location='edit_create_actions_robot.html'">Создать
+                onclick="eel.load_creation_action(headername='Создание действий робота',titlename='Create action robot');document.location='edit_create_actions_robot.html'">
+            Создать
         </button>
         <button class="operation_btn" onclick="delete_selected()">Удалить</button>
         <button class="operation_btn">Сохранить</button>

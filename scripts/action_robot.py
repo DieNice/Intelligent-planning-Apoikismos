@@ -3,6 +3,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from models.models import *
 from scripts.simple_actions import get_all, types
+from typing import List, Tuple
 
 
 @eel.expose
@@ -62,7 +63,7 @@ def get_possible_actions_all():
 
 
 @eel.expose
-def load_creation_action():
+def load_creation_action(headername: str, titlename: str):
     env = Environment(
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
@@ -73,7 +74,14 @@ def load_creation_action():
     i = get_all(types["Instruments"], False)
     b = get_all(types["Buildings"], False)
 
-    rendered_page = template.render(materials=m, instruments=i, buildings=b)
+    rendered_page = template.render(materials=m, instruments=i, buildings=b, headername=headername, titlename=titlename)
 
     with open('./static/temp/edit_create_actions_robot.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
+
+
+@eel.expose
+def create_action_robot(materials: List[Tuple[str, str, int]], instruments: List[Tuple[str, str]],
+                        buildings: List[Tuple[str, str]],
+                        res_buildings: List[Tuple[str, str]]):
+    pass
