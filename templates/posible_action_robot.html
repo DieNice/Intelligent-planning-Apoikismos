@@ -32,16 +32,62 @@
     <div class="scroll-table-body table_blur">
         <table id="info-table">
             <tbody>
-            {% for act in action_list %}
+            {% for act in precondition_data %}
             <tr onclick='select_row(this)'>
                 <td>
-                    {{ act[0][1] }}
+                    {{ act[0][0].name }}
                 </td>
                 <td>
-                    {{ act[0][2:8] }}
+                    <p>
+                        Материалы:
+                        {% for m in act %}
+                        {% if m[2].type == "material" %}
+                        {{ m[2].name}},{{ m[1].count}};
+                        {% endif %}
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Инструменты:
+                        {% for i in act %}
+                        {% if i[2].type == "instrument" %}
+                        {{ i[2].name }},
+                        {% endif %}
+                        {% endfor %};
+                    </p>
+                    <p>
+                        Постройки:
+                        {% for b in act %}
+                        {% if b[2].type == "building" %}
+                        {{ b[2].name}},
+                        {% endif %}
+                        {% endfor %};
+                    </p>
                 </td>
                 <td>
-                    {{ act[0][9:16] }}
+                    <p>
+                        Материалы:
+                        {% for m in result_data[loop.index0] %}
+                        {% if m[2].type == "material" %}
+                        {{ m[2].name}},{{ m[1].count}};
+                        {% endif %}
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Инструменты:
+                        {% for i in result_data[loop.index0] %}
+                        {% if i[2].type == "instrument" %}
+                        {{ i[2].name }},
+                        {% endif %}
+                        {% endfor %};
+                    </p>
+                    <p>
+                        Постройки:
+                        {% for b in result_data[loop.index0]%}
+                        {% if b[2].type == "building" %}
+                        {{ b[2].name}},
+                        {% endif %}
+                        {% endfor %};
+                    </p>
                 </td>
             </tr>
             {% endfor %}

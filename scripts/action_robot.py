@@ -14,52 +14,64 @@ def action_robot_load():
     )
     template = env.get_template('/templates/posible_action_robot.html')
     getted_data = get_possible_actions_all()
-    data = list()
-    set_added = set()
-    l_getted_data = len(getted_data)
-    for i in range(l_getted_data):
-        if getted_data[i][0] not in set_added:
-            subdata = []
-            subdata.append(getted_data[i])
-            for j in range(i + 1, l_getted_data):
-                if getted_data[j][0] == getted_data[i][0]:
-                    subdata.append(getted_data[j])
-            set_added.add(getted_data[i])
-            data.append(subdata)
-
-    rendered_page = template.render(action_list=data)
+    precondition_data = squeeze(getted_data[0])
+    result_data = squeeze(getted_data[1])
+    rendered_page = template.render(precondition_data=precondition_data, result_data=result_data)
 
     with open('./static/temp/posible_action_robot.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
 
 
+def squeeze(data):
+    added = set()
+    res_data = []
+    l_data = len(data)
+    for i in range(l_data):
+        if data[i][0].id not in added:
+            subdata = []
+            added.add(data[i][0].id)
+            subdata.append(data[i])
+            for j in range(i + 1, l_data):
+                if data[j][0] == data[i][0]:
+                    subdata.append(data[j])
+            res_data.append(subdata)
+    return res_data
+
+
 def get_possible_actions_all():
-    m1 = aliased(Material)
-    m2 = aliased(Material)
-    i1 = aliased(Instrument)
-    i2 = aliased(Instrument)
-    b1 = aliased(Building)
-    b2 = aliased(Building)
-
-    query = session.query(PossibleAction, m1, MaterialPrecondition.count, i1, b1, m2, MaterialResult.count, i2, b2)
+    precondition_records = []
+    query = session.query(PossibleAction, MaterialPrecondition, Material)
     query = query.join(MaterialPrecondition, MaterialPrecondition.action_id == PossibleAction.id)
-    query = query.join(m1, m1.id == MaterialPrecondition.material_id)
+    query = query.join(Material, Material.id == MaterialPrecondition.material_id)
+    records = query.all()
+    precondition_records.extend(records)
+    query = session.query(PossibleAction, InstrumentPrecondition, Instrument)
     query = query.join(InstrumentPrecondition, InstrumentPrecondition.action_id == PossibleAction.id)
-    query = query.join(i1, i1.id == InstrumentPrecondition.instrument_id)
+    query = query.join(Instrument, Instrument.id == InstrumentPrecondition.instrument_id)
+    records = query.all()
+    precondition_records.extend(records)
+    query = session.query(PossibleAction, BuildingPrecondition, Building)
     query = query.join(BuildingPrecondition, BuildingPrecondition.action_id == PossibleAction.id)
-    query = query.join(b1, b1.id == BuildingPrecondition.building_id)
-
+    query = query.join(Building, Building.id == BuildingPrecondition.building_id)
+    records = query.all()
+    precondition_records.extend(records)
+    result_records = []
+    query = session.query(PossibleAction, MaterialResult, Material)
     query = query.join(MaterialResult, MaterialResult.action_id == PossibleAction.id)
-    query = query.join(m2, m2.id == MaterialResult.material_id)
+    query = query.join(Material, Material.id == MaterialResult.material_id)
+    records = query.all()
+    result_records.extend(records)
+    query = session.query(PossibleAction, InstrumentResult, Instrument)
     query = query.join(InstrumentResult, InstrumentResult.action_id == PossibleAction.id)
-    query = query.join(i2, i2.id == InstrumentResult.instrument_id)
+    query = query.join(Instrument, Instrument.id == InstrumentResult.instrument_id)
+    records = query.all()
+    result_records.extend(records)
+    query = session.query(PossibleAction, BuildingResult, Building)
     query = query.join(BuildingResult, BuildingResult.action_id == PossibleAction.id)
-    query = query.join(b2, b2.id == BuildingResult.building_id)
-
-    query = query.order_by(PossibleAction.name)
-    found_records = query.cte()
-    records = session.query(found_records).all()
-    return records
+    query = query.join(Building, Building.id == BuildingResult.building_id)
+    records = query.all()
+    result_records.extend(records)
+    return (precondition_records, result_records)
 
 
 @eel.expose

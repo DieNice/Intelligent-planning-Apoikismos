@@ -132,8 +132,8 @@ class MaterialPrecondition(Base):
         self.count = count
 
     def __repr__(self):
-        return "<MaterialPrecondition('%s','%s')>" % (
-            str(self.material_id), str(self.action_id))
+        return "<MaterialPrecondition('%s','%s','%s')>" % (
+            str(self.material_id), str(self.action_id), str(self.count))
 
 
 class BuildingPrecondition(Base):
@@ -185,8 +185,8 @@ class MaterialResult(Base):
         self.count = count
 
     def __repr__(self):
-        return "<MaterialResult('%s','%s')>" % (
-            str(self.material_id), str(self.action_id))
+        return "<MaterialResult('%s','%s','%s')>" % (
+            str(self.material_id), str(self.action_id), str(self.count))
 
 
 class BuildingResult(Base):
@@ -202,7 +202,7 @@ class BuildingResult(Base):
         self.building_id = building_id
 
     def __repr__(self):
-        return "<BuildingPrecondition('%s','%s')>" % (
+        return "<BuildingResult('%s','%s')>" % (
             str(self.action_id), str(self.building_id))
 
 
