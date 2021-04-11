@@ -38,9 +38,16 @@ def create_object_load(title: str, header: str):
 
 @eel.expose
 def create_object(type: str, name: str, desc: str) -> None:
-    new_material = types[type](name, desc)
-    session.add(new_material)
-    session.commit()
+    query = session.query(types[type]).filter_by(name=name).first()
+    if query is not None:
+        print("Объект с таким названием уже существует!")
+        eel.already_exists()
+    else:
+        new_material = types[type](name, desc)
+        session.add(new_material)
+        session.commit()
+        print("Успешно добавлено!")
+        eel.sucessfull_create()
 
 
 def get_all(type: SimpleEntity, filtered_special=True):

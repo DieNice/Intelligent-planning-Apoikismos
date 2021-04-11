@@ -64,10 +64,21 @@
         let title = document.getElementById('title_object').value;
         let description = document.getElementById('description_object').value;
         eel.create_object('{{titlename}}', title, description);
-        alert(title + " успешно сохранено!");
-        document.getElementById('title_object').value = "";
-        document.getElementById('description_object').value = "";
     }
+
+    function already_exists() {
+        alert("Запись с таким именем уже существует!");
+    }
+
+    function sucessfull_create() {
+        let object_name = document.getElementById('title_object').value;
+        alert(object_name + " успешно создано!");
+        eel.object_load(title = "{{titlename}}", header = "{{headername}}");
+        document.location = 'simple_objects.html';
+    }
+
+    eel.expose(already_exists);
+    eel.expose(sucessfull_create);
 </script>
 </body>
 </html>

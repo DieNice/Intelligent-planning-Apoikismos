@@ -222,6 +222,8 @@
 </div>
 </p>
 <script>
+
+
     function clear_selected() {
         let transit_rows = document.querySelectorAll('.selected')
         let m_len = transit_rows.length;
@@ -334,12 +336,22 @@
             alert("Выберите результаты построек!")
         } else {
             eel.createactionrobot(name_action, m, instr, b, res_b);
+
+        }
+
+
+        function already_exists() {
+            alert("Запись с таким именем уже существует!");
+        }
+
+        function sucessfull_create() {
             eel.action_robot_load();
             alert(name_action + " успешно создано!")
             document.location = 'posible_action_robot.html';
         }
 
-
+        eel.expose(already_exists);
+        eel.expose(sucessfull_create);
     }
 
 </script>

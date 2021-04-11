@@ -150,7 +150,6 @@ tbody tr:hover {
     position: absolute;
     display: inline-flex;
     flex-direction: column;
-    margin-top: 0vw;
     margin-left: 10vw;
     margin-right: 10vw;
 }
@@ -186,4 +185,13 @@ textarea {
 
 .img_button {
     height: 5vh;
+}
+
+button:hover {
+    background-color: #1CF624;
+}
+
+.operation_btn{
+    margin-left: 30vw;
+    text-align: center;
 }

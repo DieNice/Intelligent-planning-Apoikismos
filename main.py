@@ -2,8 +2,11 @@ import eel
 import sys
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from models.models import *
+
 from scripts.simple_actions import *
 from scripts.action_robot import *
+from scripts.integrity_check import *
+
 
 
 if __name__ == '__main__':

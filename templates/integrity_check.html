@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Intelligent-planning-Apoikismos/Knowlage editor/Integrity check</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/integrity_check.css">
+    <script type="text/javascript" src="/eel.js"></script>
+</head>
+<body>
+<div class="header">Проверка целостности</div>
+<p class="background_img">
+<div class="controls">
+    <div class="scroll-table">
+        <table>
+            <thead>
+            <tr>
+                <th>Название раздела</th>
+                <th>Результат проверки</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="scroll-table-body table_blur">
+        <table>
+            <tbody>
+
+            <tr>
+                <td>
+                    Материалы (ресурсы)
+                </td>
+                <td>
+                    {% for m in check_materials%}
+                    <p>{{m}}</p>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Инструменты
+                </td>
+                <td>
+                    {% for i in check_instruments%}
+                    <p>{{i}}</p>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Постройки
+                </td>
+                <td>
+                    {% for b in check_buildings%}
+                    <p>{{b}}</p>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Возможные действия
+                </td>
+                <td>
+                    {% for a in check_actions%}
+                    <p>{{a}}</p>
+                    {% endfor %}
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="operation_line">
+        <button class="operation_btn" onclick="check()">Проверка
+        </button>
+    </div>
+    <div id="button_prev">
+        <button class="btn_prev" onclick="document.location='../knowlage_editor.html'">Назад</button>
+    </div>
+</div>
+</p>
+<script>
+    function check() {
+        eel.check_load(true);
+        document.location = 'integrity_check.html';
+    }
+</script>
+</body>
+</html>

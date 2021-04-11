@@ -100,6 +100,7 @@ def createactionrobot(action_name: str, materials: List[Tuple[str, str, int]], i
     query = session.query(PossibleAction).filter_by(name=action_name).first()
     if query is not None:
         print("Действие с таким названием уже существует!")
+        eel.already_exists()
     else:
         session.add(new_action)
         session.commit()
@@ -137,6 +138,7 @@ def createactionrobot(action_name: str, materials: List[Tuple[str, str, int]], i
             session.add(new_buildings_res)
             session.commit()
         print("Успешно добавлено!")
+        eel.sucessfull_create()
 
 
 @eel.expose
