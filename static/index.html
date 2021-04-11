@@ -13,7 +13,13 @@
         знаний
     </button>
     <img class="lamp_img" src="img/lamp_background.png">
-    <button class="do_task_btn" onclick=" document.location = 'solution_problem.html';">Решение задачи</button>
+    <button class="do_task_btn" onclick="action_robot()">Решение задачи</button>
 </p>
+<script>
+    function action_robot() {
+        eel.load_creation_action('', '');
+        document.location = 'temp/solution_problem.html';
+    }
+</script>
 </body>
 </html>

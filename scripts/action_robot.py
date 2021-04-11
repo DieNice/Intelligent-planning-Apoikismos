@@ -81,15 +81,20 @@ def load_creation_action(headername: str, titlename: str):
         autoescape=select_autoescape(['html', 'xml'])
     )
     template = env.get_template('/templates/create_actions_robot.html')
+    template_2 = env.get_template('/templates/solution_problem.html')
 
     m = get_all(types["Materials"], False)
     i = get_all(types["Instruments"], False)
     b = get_all(types["Buildings"], False)
 
     rendered_page = template.render(materials=m, instruments=i, buildings=b, headername=headername, titlename=titlename)
+    rendered_page_2 = template_2.render(materials=m, instruments=i, buildings=b, headername=headername,
+                                        titlename=titlename)
 
     with open('./static/temp/create_actions_robot.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
+    with open('./static/temp/solution_problem.html', 'w', encoding="utf8") as file:
+        file.write(rendered_page_2)
 
 
 @eel.expose

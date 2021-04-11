@@ -2,40 +2,38 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Intelligent-planning-Apoikismos/Knowlage editor/{{titlename}}</title>
+    <title>Intelligent-planning-Apoikismos/Solution problem</title>
     <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/edit_create_actions_robot.css">
+    <link rel="stylesheet" href="../css/solution_problem.css">
     <script type="text/javascript" src="/eel.js"></script>
 </head>
 <body>
 <p class="background_img">
 <div class="controls">
-    <div class="header">{{headername}}</div>
-    <div class="block_label">Предусловие действия</div>
-    <div class="action_name">
-        Название действия
-        <input type="text" id="inputtext">
-    </div>
-    <div class="top_block">
-        <div class="column_tables left_tables">
-            <div>
-                <div class="scroll-table">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Материалы</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="scroll-table-body table_blur">
-                    <table>
-                        <tbody id="material-precondition">
-                        {% for material in materials %}
-                        <tr onclick='select_row(this)' title="{{ material.description}}">
-                            <td>
-                                {{ material.name }}
-                            </td>
+    <div class="header">Решение задачи</div>
+
+</div>
+<div class="block_label">Начальное состояние</div>
+<div class="top_block">
+    <div class="column_tables left_tables">
+        <div>
+            <div class="scroll-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Материалы</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="scroll-table-body table_blur">
+                <table>
+                    <tbody id="material-precondition">
+                    {% for material in materials %}
+                    <tr onclick='select_row(this)' title="{{ material.description}}">
+                        <td>
+                            {{ material.name }}
+                        </td>
                         </tr>
                         {% endfor %}
                         </tbody>
@@ -151,7 +149,7 @@
             </div>
         </div>
     </div>
-    <div class="block_label">Результаты действия</div>
+<div class="block_label">Целевое состояние</div>
     <div class="bottom_block">
         <div class="column_tables left_tables">
             <div>
@@ -215,15 +213,15 @@
             </div>
         </div>
     </div>
-    <div class="operation_line">
-        <button class="btn_prev" onclick="document.location='index.html'">Назад</button>
-        <input type="image" class="img_button" src="../img/undo.png" alt="undo button">
-        <input type="image" class="img_button" src="../img/redo.png" alt="redo button">
-        <button class="operation_btn" onclick="save()">Сохранить</button>
-    </div>
+<div class="operation_line">
+    <button class="btn_prev" onclick="document.location='../index.html'">Назад</button>
+    <button class="operation_btn" onclick="save()">Найти план</button>
+</div>
 </div>
 </p>
 <script>
+
+
     function clear_selected() {
         let transit_rows = document.querySelectorAll('.selected')
         let m_len = transit_rows.length;
@@ -284,6 +282,7 @@
     }
 
     function save() {
+        let name_action = document.getElementById('inputtext').value;
         let materials = document.getElementById('material-precondition-right').getElementsByTagName("tr");
         let instruments = document.getElementById('instrument-precondition-right').getElementsByTagName("tr");
         let buildings = document.getElementById('building-precondition-right').getElementsByTagName("tr");
@@ -292,27 +291,37 @@
         for (let i = 0; i < materials.length; i++) {
             let name = materials[i].getElementsByTagName("td")[0].innerText;
             let desc = materials[i].title;
-            let count = Number(materials[i].getElementsByTagName("td")[1].innerText);
+            let count = Number(materials[i].getElementsByTagName("input")[0].value);
             m.push([name, desc, count]);
         }
         let instr = [];
         for (let i = 0; i < instruments.length; i++) {
             let name = instruments[i].getElementsByTagName("td")[0].innerText;
-            let desc = instruments[i].title;
-            instr.push([name, desc]);
+            let instr_desc = "";
+            if (name != "Нет") {
+                instr_desc = instruments[i].title;
+            }
+            instr.push([name, instr_desc]);
         }
         let b = [];
         for (let i = 0; i < buildings.length; i++) {
             let name = buildings[i].getElementsByTagName("td")[0].innerText;
-            let desc = instruments[i].title;
-            b.push([name, desc]);
+            let build_desc = "";
+            if (name != "Нет") {
+                build_desc = buildings[i].title;
+            }
+            b.push([name, build_desc]);
         }
         let res_b = [];
         for (let i = 0; i < res_buildings.length; i++) {
-            let name = buildings[i].getElementsByTagName("td")[0].innerText;
-            let desc = instruments[i].title;
-            res_b.push([name, desc]);
+            let name = res_buildings[i].getElementsByTagName("td")[0].innerText;
+            let res_b_desc = "";
+            if (name != "Нет") {
+                res_b_desc = res_buildings[i].title;
+            }
+            res_b.push([name, res_b_desc]);
         }
+        console.log(name_action)
         console.log(m);
         console.log(instr);
         console.log(b);
@@ -324,9 +333,9 @@
         } else if (res_b.length == 0) {
             alert("Выберите результаты построек!")
         } else {
-            eel.create_action_robot(m, instr, b, res_b);
-        }
+            console.log("Вычисляем!")
 
+        }
     }
 
 </script>

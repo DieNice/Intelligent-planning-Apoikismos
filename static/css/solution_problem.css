@@ -1,5 +1,5 @@
 .scroll-table-body {
-    height: 10vh;
+    height: 14vh;
     overflow-x: auto;
     margin-top: 0px;
     border-bottom: 1px solid #eee;
@@ -103,7 +103,7 @@ tbody tr:hover {
 }
 
 .operation_btn {
-    height: 2vh;
+    height: 3vh;
     width: 15vw;
     background-color: #F1AD00;
     color: white;
@@ -157,15 +157,15 @@ tbody tr:hover {
     position: absolute;
     display: inline-flex;
     flex-direction: column;
-    margin-top: -65vh;
-    margin-left: 15vw;
+    margin-top: -10vh;
+    margin-left: 5vw;
 }
 
 .header {
     height: 1vh;
-    width: 12vw;
+    width: 22vw;
+    margin-left: 30vw;
     text-align: center;
-    margin-left: 24vw;
     background-color: #F1AD00;
     color: white;
     font-size: 1.5vw;
@@ -191,7 +191,7 @@ top_column {
 }
 
 .column_tables {
-    width: 30vw;
+    width: 40vw;
     display: inline-flex;
     flex-direction: column;
 }
@@ -201,13 +201,15 @@ top_column {
 }
 
 .operation_line {
+    margin-left: 35vw;
     margin-top: 1vh;
 }
 
 .block_label {
     height: 0.5vh;
     width: 10vw;
-    margin-left: 26vw;
+    margin-left: 42vw;
+    text-align: center;
     background-color: #F1AD00;
     color: white;
     font-size: 1vw;
@@ -215,16 +217,17 @@ top_column {
     border: none;
     border-radius: 2vw;
     padding: .2em 1em calc(.8em + 3px);
+    position: inherit;
 }
 
 .action_name input {
     width: 16vw;
-    height: 1vh;
+    height: 2vh;
 }
 
 .action_name {
     display: contents;
-    height: 0.5vh;
+    height: 1vh;
     width: 10vw;
     background-color: #F1AD00;
     font-size: 1vw;
@@ -239,4 +242,16 @@ top_column {
     width: 95%;
     height: 1vh;
     font-size: 1vh;
+}
+
+.selected td {
+    border: solid blue 1px;
+}
+
+.top_block {
+    margin-left: 6vw;
+}
+
+.bottom_block {
+    margin-left: 6vw;
 }
