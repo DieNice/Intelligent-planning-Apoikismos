@@ -151,7 +151,6 @@ tbody tr:hover {
     position: absolute;
     display: inline-flex;
     flex-direction: column;
-    margin-top: -35vw;
     margin-left: 22vw;
 }
 
