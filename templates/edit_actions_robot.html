@@ -336,7 +336,7 @@
         }
         let res_b = [];
         for (let i = 0; i < res_buildings.length; i++) {
-            let name = buildings[i].getElementsByTagName("td")[0].innerText;
+            let name = res_buildings[i].getElementsByTagName("td")[0].innerText;
             let res_b_desc = "";
             if (name != "Нет") {
                 res_b_desc = res_buildings[i].title;
