@@ -98,11 +98,11 @@
         <input type="image" class="img_button" src="../img/undo.png" alt="undo button">
         <input type="image" class="img_button" src="../img/redo.png" alt="redo button">
         <button class="operation_btn"
-                onclick="eel.load_creation_action(headername='Редактирование действий робота',titlename='Edit action robot');document.location='edit_create_actions_robot.html'">
+                onclick="edit()">
             Редактировать
         </button>
         <button class="operation_btn"
-                onclick="eel.load_creation_action(headername='Создание действий робота',titlename='Create action robot');document.location='edit_create_actions_robot.html'">
+                onclick="eel.load_creation_action(headername='Создание действий робота',titlename='Create action robot');document.location='create_actions_robot.html'">
             Создать
         </button>
         <button class="operation_btn" onclick="delete_selected()">Удалить</button>
@@ -140,6 +140,18 @@
             }
 
         }
+    }
+
+    function edit() {
+        let row = document.getElementsByClassName('selected');
+        if (row.length != 1) {
+            alert('Выберите запись для редактирования!');
+        } else {
+            let action_name = row[0].children[0].textContent;
+            eel.load_edit_action(headername = 'Редактирование действий робота', titlename = 'Edit action robot', action_name);
+            document.location = 'edit_actions_robot.html'
+        }
+
     }
 
     function delete_selected() {
