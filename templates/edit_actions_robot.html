@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Intelligent-planning-Apoikismos/Knowlage editor/{{titlename}}</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/edit_create_actions_robot.css">
+    <script type="text/javascript" src="/eel.js"></script>
+</head>
+<body>
+<p class="background_img">
+<div class="controls">
+    <div class="header">{{headername}}</div>
+    <div class="block_label">Предусловие действия</div>
+    <div class="action_name">
+        Название действия
+        <input type="text" id="inputtext" value="{{actionname}}">
+    </div>
+    <div class="top_block">
+        <div class="column_tables left_tables">
+            <div>
+                <div class="scroll-table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Материалы</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="scroll-table-body table_blur">
+                    <table>
+                        <tbody id="material-precondition">
+                        {% for material in materials %}
+                        <tr onclick='select_row(this)' title="{{ material.description}}">
+                            <td>
+                                {{ material.name }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <div class="scroll-table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Инструменты</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="scroll-table-body table_blur">
+                    <table>
+                        <tbody id="instrument-precondition">
+                        {% for instrument in instruments %}
+                        <tr onclick='select_row(this)' title="{{instrument.description}}">
+                            <td>
+                                {{ instrument.name }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <div class="scroll-table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Постройки</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="scroll-table-body table_blur">
+                    <table>
+                        <tbody id="building-precondition">
+                        {% for building in buildings %}
+                        <tr onclick='select_row(this)' title="{{building.description}}">
+                            <td>
+                                {{ building.name }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="button_push_column">
+            <button class="btn_push" onclick="add_rows()">></button>
+            <button class="btn_push" onclick="delete_rows()"><</button>
+        </div>
+        <div class="column_tables right_tables">
+            <div>
+                <div class="scroll-table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Материалы</th>
+                            <th>Количество единиц ресурсов</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="scroll-table-body table_blur">
+                    <table>
+                        <tbody id="material-precondition-right">
+                        {% for material,count in materials_res %}
+                        <tr onclick='select_row(this)' title="{{material.description}}">
+                            <td>{{material.name}}</td>
+                            <td><input type="text" value="{{count}}"></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <div class="scroll-table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Инструменты</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="scroll-table-body table_blur">
+                    <table>
+                        <tbody id="instrument-precondition-right">
+                        {% for instrument in instruments_res %}
+                        <tr onclick='select_row(this)' title="{{instrument.description}}">
+                            <td>{{instrument.name}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <div class="scroll-table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Постройки</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="scroll-table-body table_blur">
+                    <table>
+                        <tbody id="building-precondition-right">
+                        {% for building in buildings_res %}
+                        <tr onclick='select_row(this)' title="{{building.description}}">
+                            <td>{{building.name}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block_label">Результаты действия</div>
+    <div class="bottom_block">
+        <div class="column_tables left_tables">
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+                <div class="scroll-table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Постройки</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="scroll-table-body table_blur">
+                    <table>
+                        <tbody id="building-result">
+                        {% for building in buildings_target_left %}
+                        <tr onclick='select_row(this)' title="{{ building.description }}">
+                            <td>
+                                {{ building.name }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="button_push_column">
+            <button class="btn_push"
+                    onclick="add_to_right('building-result', 'building-result-right', false);clear_selected()">>
+            </button>
+            <button class="btn_push"
+                    onclick="add_to_left('building-result-right','building-result',false);clear_selected()"><
+            </button>
+        </div>
+        <div class="column_tables right_tables">
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+                <div class="scroll-table">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Постройки</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="scroll-table-body table_blur">
+                    <table>
+                        <tbody id="building-result-right">
+                        {% for building in buildings_target %}
+                        <tr onclick='select_row(this)' title="{{building.description}}">
+                            <td>{{building.name}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="operation_line">
+        <button class="btn_prev" onclick="document.location='posible_action_robot.html'">Назад</button>
+        <input type="image" class="img_button" src="../img/undo.png" alt="undo button">
+        <input type="image" class="img_button" src="../img/redo.png" alt="redo button">
+        <button class="operation_btn" onclick="save()">Сохранить</button>
+    </div>
+</div>
+</p>
+<script>
+    let old_action_name = "{{actionname}}"
+
+    function clear_selected() {
+        let transit_rows = document.querySelectorAll('.selected')
+        let m_len = transit_rows.length;
+        for (let i = 0; i < m_len; i++) {
+            transit_rows[i].className = ''
+        }
+    }
+
+
+    function add_rows() {
+        add_to_right("material-precondition", "material-precondition-right");
+        add_to_right("instrument-precondition", "instrument-precondition-right", false);
+        add_to_right("building-precondition", "building-precondition-right", false);
+        clear_selected()
+    }
+
+    function delete_rows() {
+        add_to_left("material-precondition-right", "material-precondition", true);
+        add_to_left("instrument-precondition-right", "instrument-precondition", false);
+        add_to_left("building-precondition-right", "building-precondition", false);
+        clear_selected()
+    }
+
+    function add_to_right(id1, id2, add_input = true) {
+        let transit_rows = document.getElementById(id1).getElementsByClassName('selected');
+        let right_column = document.getElementById(id2);
+        let m_len = transit_rows.length;
+        for (let i = 0; i < m_len; i++) {
+            if (add_input) {
+                let new_td = document.createElement("td");
+                let new_input = document.createElement("input");
+                new_td.appendChild(new_input);
+                transit_rows[0].appendChild(new_td);
+            }
+
+            right_column.appendChild(transit_rows[0]);
+        }
+    }
+
+    function add_to_left(id1, id2, del_input = true) {
+        let transit_rows = document.getElementById(id1).getElementsByClassName('selected');
+        let right_column = document.getElementById(id2);
+        let m_len = transit_rows.length;
+        for (let i = 0; i < m_len; i++) {
+            if (del_input) {
+                let old_td = document.getElementsByClassName('selected')[i].children[1]
+                document.getElementsByClassName('selected')[i].removeChild(old_td)
+            }
+            right_column.appendChild(transit_rows[0]);
+        }
+    }
+
+
+    function select_row(row) {
+        selected_row = row;
+        if (selected_row.className == 'selected') selected_row.className = '';
+        else if (selected_row != null) selected_row.className = 'selected';
+    }
+
+    function save() {
+        let name_action = document.getElementById('inputtext').value;
+        let materials = document.getElementById('material-precondition-right').getElementsByTagName("tr");
+        let instruments = document.getElementById('instrument-precondition-right').getElementsByTagName("tr");
+        let buildings = document.getElementById('building-precondition-right').getElementsByTagName("tr");
+        let res_buildings = document.getElementById('building-result-right').getElementsByTagName("tr");
+        let m = [];
+        for (let i = 0; i < materials.length; i++) {
+            let name = materials[i].getElementsByTagName("td")[0].innerText;
+            let desc = materials[i].title;
+            let count = Number(materials[i].getElementsByTagName("input")[0].value);
+            m.push([name, desc, count]);
+        }
+        let instr = [];
+        for (let i = 0; i < instruments.length; i++) {
+            let name = instruments[i].getElementsByTagName("td")[0].innerText;
+            let instr_desc = "";
+            if (name != "Нет") {
+                instr_desc = instruments[i].title;
+            }
+            instr.push([name, instr_desc]);
+        }
+        let b = [];
+        for (let i = 0; i < buildings.length; i++) {
+            let name = buildings[i].getElementsByTagName("td")[0].innerText;
+            let build_desc = "";
+            if (name != "Нет") {
+                build_desc = buildings[i].title;
+            }
+            b.push([name, build_desc]);
+        }
+        let res_b = [];
+        for (let i = 0; i < res_buildings.length; i++) {
+            let name = buildings[i].getElementsByTagName("td")[0].innerText;
+            let res_b_desc = "";
+            if (name != "Нет") {
+                res_b_desc = res_buildings[i].title;
+            }
+            res_b.push([name, res_b_desc]);
+        }
+        console.log(name_action)
+        console.log(m);
+        console.log(instr);
+        console.log(b);
+        console.log(res_b);
+        if (m.length == 0) {
+            alert("Выберите материалы!")
+        } else if (instr.length == 0) {
+            alert("Выберите инструменты!")
+        } else if (res_b.length == 0) {
+            alert("Выберите результаты построек!")
+        } else {
+            eel.editactionrobot(old_action_name, name_action, m, instr, b, res_b);
+            eel.action_robot_load();
+            alert(name_action + " успешно обновлено!")
+            document.location = 'posible_action_robot.html';
+        }
+
+
+    }
+</script>
+</body>
+</html>
