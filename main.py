@@ -6,8 +6,7 @@ from models.models import *
 from scripts.simple_actions import *
 from scripts.action_robot import *
 from scripts.integrity_check import *
-
-
+from scripts.resolver import *
 
 if __name__ == '__main__':
     eel.init('static', allowed_extensions=['.js', '.html'])

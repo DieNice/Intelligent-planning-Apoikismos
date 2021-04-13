@@ -282,7 +282,6 @@
     }
 
     function save() {
-        let name_action = document.getElementById('inputtext').value;
         let materials = document.getElementById('material-precondition-right').getElementsByTagName("tr");
         let instruments = document.getElementById('instrument-precondition-right').getElementsByTagName("tr");
         let buildings = document.getElementById('building-precondition-right').getElementsByTagName("tr");
@@ -321,7 +320,6 @@
             }
             res_b.push([name, res_b_desc]);
         }
-        console.log(name_action)
         console.log(m);
         console.log(instr);
         console.log(b);
@@ -334,7 +332,7 @@
             alert("Выберите результаты построек!")
         } else {
             console.log("Вычисляем!")
-
+            eel.resolve(m, instr, b, res_b)
         }
     }
 
