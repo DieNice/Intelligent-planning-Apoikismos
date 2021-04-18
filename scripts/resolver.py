@@ -11,8 +11,10 @@ def resolve(materials, instrumetns, buildings, res_buildings):
     initial_state = State(materials, instrumetns, buildings)
     goals = initial_goals(res_buildings)
     resolver = NlpResolver()
-    good_plan = resolver.nlp(initial_state, goals)
+    good_plan, logs = resolver.nlp(initial_state, goals)
     print(good_plan)
+    for i in logs:
+        print(i)
 
 
 class State():
@@ -224,30 +226,43 @@ class NlpResolver():
         result = state - new_state
         return result
 
-    def nlp(self, initial_state, goals):
+    def nlp(self, initial_state, goals) -> Tuple[List[str], List[Operation]]:
         state = initial_state
-        goalset = goals
+        logs = []
+        logs.append("Initializated state \"{}\"".format(str(state)))
+        goalset = goals.copy()
+        for goal in goalset:
+            logs.append("Added new goal \"{}\"".format(str(goal)))
         opstack = []
         plan = []
         index = 0
-        while len(goalset) != 0:
+        while index < len(goalset) and len(goalset) != 0:
             g = goalset[index]
+            logs.append("Selected goal \"{}\"".format(g))
             g_index = goalset.index(g)
             if not self.__match(state, g):
+                logs.append("State \"{}\" dont match goal \"{}\"".format(str(state), str(g)))
                 o = self.__choose_operator(g)
+                logs.append("Choose operator \"{}\"".format(str(o)))
                 opstack.append(o)
                 goalset.insert(g_index + 1, o.get_preconditions())
+                logs.append("Added new goal \"{}\"".format(str(o.get_preconditions())))
                 index += 1
             else:
+                logs.append("The goal \"{}\" is complete".format(goalset[index]))
                 goalset.pop(index)
                 state.add_empty_buildings()
             l_op = len(opstack)
             while l_op != 0 and self.__met_in_state(opstack[l_op - 1], state):
+                logs.append("Operation \"{}\" met in state \"{}\"".format(str(opstack[l_op - 1]), str(state)))
                 o = opstack.pop()
+                logs.append("The goal \"{}\"is complete".format(str(goalset[g_index + 1])))
                 goalset.pop(g_index + 1)
                 index -= 1
                 g_index -= 1
                 state = self.__apply(o, state)
+                logs.append("Applied operation \"{}\" to state \"{}\"".format(str(o), str(state)))
                 plan.append(o)
+                logs.append("Added oparation \"{}\" to plan".format(str(o)))
                 l_op = len(opstack)
-        return plan
+        return plan, logs
