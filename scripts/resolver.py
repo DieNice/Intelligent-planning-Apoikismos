@@ -11,8 +11,8 @@ def resolve(materials, instrumetns, buildings, res_buildings):
     initial_state = State(materials, instrumetns, buildings)
     goals = initial_goals(res_buildings)
     resolver = NlpResolver()
-    goodplan = resolver.nlp(initial_state, goals)
-    print(goodplan)
+    good_plan = resolver.nlp(initial_state, goals)
+    print(good_plan)
 
 
 class State():
@@ -60,6 +60,21 @@ class State():
         result: State = State(materials, self.__instruments, other.get_buildings(), True)
         return result
 
+    def add_empty_buildings(self) -> None:
+        self.__buildings.append('Нет')
+
+    def __str__(self):
+        res_str = "State{{Materials:"
+        for i in self.__materials:
+            res_str += str(i) + ';'
+        res_str += " Instruments:"
+        for i in self.__instruments:
+            res_str += i + ';'
+        res_str += " Buildings:"
+        for i in self.__buildings:
+            res_str += i + ';'
+        res_str += "}"
+        return res_str
 
 def initial_goals(buildings):
     materials = []
@@ -225,6 +240,7 @@ class NlpResolver():
                 index += 1
             else:
                 goalset.pop(index)
+                state.add_empty_buildings()
             l_op = len(opstack)
             while l_op != 0 and self.__met_in_state(opstack[l_op - 1], state):
                 o = opstack.pop()
