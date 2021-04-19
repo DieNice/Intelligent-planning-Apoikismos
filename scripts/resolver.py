@@ -15,7 +15,8 @@ def resolve(materials, instrumetns, buildings, res_buildings):
     print(good_plan)
     for i in logs:
         print(i)
-
+    if len(good_plan) == 0:
+        good_plan.append("План не найден")
     env = Environment(
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
