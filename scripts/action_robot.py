@@ -88,7 +88,17 @@ def load_creation_action(headername: str, titlename: str):
     b = get_all(types["Buildings"], False)
 
     rendered_page = template.render(materials=m, instruments=i, buildings=b, headername=headername, titlename=titlename)
-    rendered_page_2 = template_2.render(materials=m, instruments=i, buildings=b, headername=headername,
+
+    for material in m:
+        if material.name == "Нет":
+            m.remove(material)
+            break
+    res_b = b.copy()
+    for buiding in res_b:
+        if buiding.name == "Нет":
+            res_b.remove(buiding)
+
+    rendered_page_2 = template_2.render(materials=m, instruments=i, buildings=b, res_b=res_b, headername=headername,
                                         titlename=titlename)
 
     with open('./static/temp/create_actions_robot.html', 'w', encoding="utf8") as file:
@@ -236,6 +246,7 @@ def editactionrobot(oldname: str, newname: str, materials: List[Tuple[str, str, 
     query = session.query(PossibleAction).filter_by(name=newname).first()
     if query is not None:
         print("Действие с таким названием уже существует!")
+        eel.already_exists()
     else:
         session.add(new_action)
         session.commit()

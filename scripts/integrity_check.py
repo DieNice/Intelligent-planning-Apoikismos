@@ -7,11 +7,6 @@ from .simple_actions import get_all, types
 
 
 @eel.expose
-def global_skip() -> None:
-    GLOBAL_CHECK.GLOBAL_CHECK = "Не пройдена"
-
-
-@eel.expose
 def check_load(check=False) -> None:
     env = Environment(
         loader=FileSystemLoader('.'),
@@ -33,6 +28,29 @@ def check_load(check=False) -> None:
         rendered_page = template.render()
         with open('./static/temp/integrity_check.html', 'w', encoding="utf8") as file:
             file.write(rendered_page)
+
+
+@eel.expose
+def preload_check() -> bool:
+    env = Environment(
+        loader=FileSystemLoader('.'),
+        autoescape=select_autoescape(['html', 'xml'])
+    )
+    template = env.get_template('/templates/integrity_check.html')
+    check_m = check_object('Materials')
+    check_i = check_object('Instruments')
+    check_b = check_object('Buildings')
+    check_a = check_actions()
+    rendered_page = template.render(check_materials=check_m, check_instruments=check_i, check_buildings=check_b,
+                                    check_actions=check_a)
+    with open('./static/temp/integrity_check.html', 'w', encoding="utf8") as file:
+        file.write(rendered_page)
+    result_flag = check_m[0] == "Проверка пройдена!" and check_i[0] == "Проверка пройдена!" and check_b[
+        0] == "Проверка пройдена!" and check_a[0] == "Проверка пройдена!"
+    if result_flag:
+        eel.get_true()
+    else:
+        eel.get_false()
 
 
 def check_object(type: str) -> List[str]:
@@ -76,5 +94,5 @@ def check_actions() -> List[str]:
         index += 1
 
     if len(conflicts) == 0:
-        conflicts.append("Успешно пройдено!")
+        conflicts.append("Проверка пройдена!")
     return conflicts

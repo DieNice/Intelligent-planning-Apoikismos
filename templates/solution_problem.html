@@ -169,7 +169,7 @@
                 <div class="scroll-table-body table_blur">
                     <table>
                         <tbody id="building-result">
-                        {% for building in buildings %}
+                        {% for building in res_b %}
                         <tr onclick='select_row(this)' title="{{ building.description }}">
                             <td>
                                 {{ building.name }}
@@ -281,6 +281,40 @@
         else if (selected_row != null) selected_row.className = 'selected';
     }
 
+    function check_inputs() {
+        function isInt(str) {
+            return !isNaN(str) && Number.isInteger(parseFloat(str));
+        }
+
+        let inputs = document.getElementById('material-precondition-right').getElementsByTagName("tr")
+        console.log(inputs)
+        for (let i = 0; i < inputs.length; i++) {
+            let now_input = inputs[i].getElementsByTagName("input");
+            console.log(now_input.value);
+            if (now_input[0].value != '') {
+                if (isInt(now_input[0].value)) {
+                    let value = Number(now_input[0].value);
+                    if (value <= 0) {
+                        alert("Число не может быть меньше или равно нулю!");
+                        now_input[0].focus()
+                        return false;
+                    }
+                    return true;
+                } else {
+                    alert("Значение не является числом!");
+                    now_input[0].focus()
+                    return false;
+                }
+            } else {
+                alert("Введите число!");
+                now_input[0].focus()
+                return false;
+            }
+            console.log(now_input)
+        }
+        return true;
+    }
+
     function save() {
         let materials = document.getElementById('material-precondition-right').getElementsByTagName("tr");
         let instruments = document.getElementById('instrument-precondition-right').getElementsByTagName("tr");
@@ -327,12 +361,16 @@
         if (m.length == 0) {
             alert("Выберите материалы!")
         } else if (instr.length == 0) {
-            alert("Выберите инструменты!")
+            alert("Выберите инструменты или выберите \"Нет\"!")
+        } else if (b.length == 0) {
+            alert("Выберите начальные постройки или выберите \"Нет\"!")
         } else if (res_b.length == 0) {
             alert("Выберите результаты построек!")
         } else {
-            console.log("Вычисляем!")
-            eel.resolve(m, instr, b, res_b)
+            if (check_inputs()) {
+                console.log("Вычисляем!")
+                eel.resolve(m, instr, b, res_b)
+            }
         }
     }
 
