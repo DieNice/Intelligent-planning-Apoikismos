@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf8">
+    <title>Intelligent-planning-Apoikismos/Knowlage editor/Materials/Result report</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/creation_materials.css">
+    <script type="text/javascript" src="/eel.js"></script>
+</head>
+<body>
+<div class="header">Результат</div>
+<p class="background_img">
+<div class="controls">
+
+    <div class="scroll-table">
+        <table>
+            <thead>
+            <tr>
+                <th>План</th>
+                <th>Интерпретация плана</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="scroll-table-body table_blur">
+        <table>
+            <tbody>
+            <td>
+                <div class="textareawrapper">
+                    <textarea id="title_object" readonly>
+                        {%for i in plan%}
+                        {{i}}}
+                        {% endfor %}
+                    </textarea>
+                </div>
+            </td>
+            <td>
+                <div class="textareawrapper">
+                    <textarea id="description_object" readonly>
+                        {%for i in logs%}
+                        {{i}}}
+                        {% endfor %}
+                    </textarea>
+                </div>
+            </td>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="button_prev">
+        <button class="btn_prev" onclick="prev();"><
+            <Назад
+        </button>
+    </div>
+</div>
+</p>
+<script type="text/javascript">
+    function prev() {
+        eel.load_creation_action('', '');
+        document.location = 'solution_problem.html';
+    }
+</script>
+</body>
+</html>

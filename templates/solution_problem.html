@@ -369,7 +369,8 @@
         } else {
             if (check_inputs()) {
                 console.log("Вычисляем!")
-                eel.resolve(m, instr, b, res_b)
+                eel.resolve(m, instr, b, res_b);
+                document.location = "result_report.html";
             }
         }
     }

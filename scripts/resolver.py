@@ -16,6 +16,16 @@ def resolve(materials, instrumetns, buildings, res_buildings):
     for i in logs:
         print(i)
 
+    env = Environment(
+        loader=FileSystemLoader('.'),
+        autoescape=select_autoescape(['html', 'xml'])
+    )
+    template = env.get_template('/templates/result_report.html')
+
+    rendered_page = template.render(plan=good_plan, logs=logs)
+    with open('./static/temp/result_report.html', 'w', encoding="utf8") as file:
+        file.write(rendered_page)
+
 
 class State():
     def __init__(self, materials: List, instruments: List, buildings: List, processed_lists=False) -> None:
