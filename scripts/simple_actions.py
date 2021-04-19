@@ -67,8 +67,3 @@ def delete_object(type: str, name: str, desc: str):
     obj = session.query(types[type]).filter_by(name=name, description=desc).one()
     session.delete(obj)
     session.commit()
-
-
-@eel.expose
-def save_changes():
-    session.commit()

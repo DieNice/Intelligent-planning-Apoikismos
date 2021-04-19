@@ -49,7 +49,6 @@
             Создать
         </button>
         <button id="delete" class="operation_btn" onclick="delete_selected()">Удалить</button>
-        <button id="save" class="operation_btn" onclick="save_changes()">Сохранить</button>
     </div>
     <div id="button_prev">
         <button class="btn_prev" onclick="document.location='../knowlage_editor.html'">Назад</button>
@@ -75,9 +74,6 @@
             eel.delete_object(type = t, name = title, desc = description);
     }
 
-    function save_changes() {
-        eel.save_changes();
-    }
 
 
     function create_object() {

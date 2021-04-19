@@ -293,8 +293,3 @@ def delete_action(action_name):
     query = session.query(PossibleAction).filter_by(name=action_name).first()
     session.delete(query)
     session.commit()
-
-
-@eel.expose
-def save_action():
-    session.commit()
