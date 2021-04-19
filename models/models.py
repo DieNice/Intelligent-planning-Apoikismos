@@ -41,8 +41,8 @@ class SimpleEntity(Base):
 class Material(SimpleEntity):
     __tablename__ = 'material'
     id = Column(Integer, ForeignKey('simple_entity.id'), primary_key=True)
-    material_precondition = relationship("MaterialPrecondition", back_populates="material_parent")
-    material_result = relationship("MaterialResult", back_populates="material_parent")
+    material_precondition = relationship("MaterialPrecondition", back_populates="material_parent", cascade='all,delete')
+    material_result = relationship("MaterialResult", back_populates="material_parent", cascade='all,delete')
 
     __mapper_args__ = {
         'polymorphic_identity': 'material'
@@ -55,8 +55,9 @@ class Material(SimpleEntity):
 class Instrument(SimpleEntity):
     __tablename__ = 'instrument'
     id = Column(Integer, ForeignKey('simple_entity.id'), primary_key=True)
-    instrument_precondition = relationship("InstrumentPrecondition", back_populates="instrument_parent")
-    instrument_result = relationship("InstrumentResult", back_populates="instrument_parent")
+    instrument_precondition = relationship("InstrumentPrecondition", back_populates="instrument_parent",
+                                           cascade='all,delete')
+    instrument_result = relationship("InstrumentResult", back_populates="instrument_parent", cascade='all,delete')
 
     __mapper_args__ = {
         'polymorphic_identity': 'instrument'
@@ -69,8 +70,8 @@ class Instrument(SimpleEntity):
 class Building(SimpleEntity):
     __tablename__ = 'building'
     id = Column(Integer, ForeignKey('simple_entity.id'), primary_key=True)
-    building_precondition = relationship("BuildingPrecondition", back_populates="building_parent")
-    building_result = relationship("BuildingResult", back_populates="building_parent")
+    building_precondition = relationship("BuildingPrecondition", back_populates="building_parent", cascade='all,delete')
+    building_result = relationship("BuildingResult", back_populates="building_parent", cascade='all,delete')
 
     __mapper_args__ = {
         'polymorphic_identity': 'building'

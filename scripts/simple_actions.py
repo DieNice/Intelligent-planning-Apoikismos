@@ -66,6 +66,7 @@ def delete_object(type: str, name: str, desc: str):
     desc = desc.replace('\n', '')
     obj = session.query(types[type]).filter_by(name=name, description=desc).one()
     session.delete(obj)
+    session.commit()
 
 
 @eel.expose
