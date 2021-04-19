@@ -11,7 +11,10 @@ def resolve(materials, instrumetns, buildings, res_buildings):
     initial_state = State(materials, instrumetns, buildings)
     goals = initial_goals(res_buildings)
     resolver = NlpResolver()
-    good_plan, logs = resolver.nlp(initial_state, goals)
+    try:
+        good_plan, logs = resolver.nlp(initial_state, goals)
+    except Exception as e:
+        good_plan = [e]
     print(good_plan)
     for i in logs:
         print(i)
@@ -179,7 +182,22 @@ class NlpResolver():
     def __match(self, state: State, goal: State) -> bool:
         flag: bool = False
         state_buildings = state.get_buildings()
+        state_materials = state.get_materials()
+        state_instruments = state.get_instruments()
         goal_buildings = goal.get_buildings()
+        goal_materials = goal.get_materials()
+        goal_instruments = goal.get_instruments()
+
+        for i in state_materials:
+            if i[0] in goal_materials:
+                for j[0] in goal_materials:
+                    if j[0] == i[0]:
+                        if j[1] > i[1]:
+                            return flag
+
+        for i in state_instruments:
+            if i not in goal_instruments:
+                return flag
         len_goal = len(goal_buildings)
         len_state = len(state_buildings)
         if len_goal > len_state:
@@ -197,7 +215,7 @@ class NlpResolver():
             goal_bildings = g.get_buildings()
             if goal_bildings == postcond[2]:
                 return op
-        raise Exception("Plan does not exists")
+        return None
 
     def __met_in_state(self, o: Operation, state: State) -> bool:
         def met_materials(precond_m, state_m) -> bool:
@@ -254,6 +272,9 @@ class NlpResolver():
             if not self.__match(state, g):
                 logs.append("State \"{}\" dont match goal \"{}\"".format(str(state), str(g)))
                 o = self.__choose_operator(g)
+                if o is None:
+                    logs.append("No operator exists to complete the goal \"{}\"".format(str(g)))
+                    return plan, logs
                 logs.append("Choose operator \"{}\"".format(str(o)))
                 opstack.append(o)
                 goalset.insert(g_index + 1, o.get_preconditions())
