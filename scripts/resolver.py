@@ -187,26 +187,32 @@ class NlpResolver():
         goal_buildings = goal.get_buildings()
         goal_materials = goal.get_materials()
         goal_instruments = goal.get_instruments()
+        if len(goal_materials) == 0 and len(goal_instruments) == 0:
+            subflag: bool = False
+            for build in goal_buildings:
+                if build in state_buildings:
+                    subflag = True
+            return subflag
+        else:
+            for i in state_materials:
+                if i[0] in goal_materials:
+                    for j[0] in goal_materials:
+                        if j[0] == i[0]:
+                            if j[1] > i[1]:
+                                return flag
 
-        for i in state_materials:
-            if i[0] in goal_materials:
-                for j[0] in goal_materials:
-                    if j[0] == i[0]:
-                        if j[1] > i[1]:
-                            return flag
-
-        for i in state_instruments:
-            if i not in goal_instruments:
+            for i in state_instruments:
+                if i not in goal_instruments:
+                    return flag
+            len_goal = len(goal_buildings)
+            len_state = len(state_buildings)
+            if len_goal > len_state:
                 return flag
-        len_goal = len(goal_buildings)
-        len_state = len(state_buildings)
-        if len_goal > len_state:
+            if len_state >= len_goal:
+                for i in state_buildings:
+                    if i in goal_buildings:
+                        return not flag
             return flag
-        if len_state >= len_goal:
-            for i in state_buildings:
-                if i in goal_buildings:
-                    return not flag
-        return flag
 
     def __choose_operator(self, g: State) -> Operation:
         all_op = self.__operations
