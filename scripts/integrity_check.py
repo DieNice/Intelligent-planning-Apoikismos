@@ -101,6 +101,14 @@ def check_empty_condition(possible_action):
     return res_logs
 
 
+def count_buildings(action: List[PossibleAction]) -> int:
+    count = 0
+    for act in action:
+        if isinstance(act[1], BuildingPrecondition) or isinstance(act[1], BuildingResult):
+            count += 1
+    return count
+
+
 def check_actions() -> List[str]:
     data = get_possible_actions_all()
     precond_data = squeeze(data[0])
@@ -130,6 +138,14 @@ def check_actions() -> List[str]:
 
             sub_index += 1
         index += 1
+    for action in precond_data:
+        if count_buildings(action) > 1:
+            conflicts.append(
+                f"\"{action[0].name}\":Число построек в предусловии не может быть больше одной для одного действия")
+    for action in result_data:
+        if count_buildings(action) > 1:
+            conflicts.append(
+                f"\"{action[0][0].name}\":Число построек в результатах не может быть больше одной для одного действия")
 
     if len(conflicts) == 0:
         conflicts.append("Проверка пройдена!")
